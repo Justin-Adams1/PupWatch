@@ -7,13 +7,9 @@ import Logo from './pawlogo.jpg';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import env from "react-dotenv";
+import config from "./config.json";
 
-require('dotenv').config()
-
-const apiKey = env.API_KEY;
-
-console.log(apiKey);
+const apiKey = config.API_KEY;
 
 function App() {
   return (
@@ -24,7 +20,6 @@ function App() {
       <Row>
         <img src={Logo} alt="Paw Watch Logo" className="logo"/> 
         <Main />   
-        {apiKey}
       </Row> 
     </Container>
   );

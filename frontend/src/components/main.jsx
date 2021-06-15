@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import MapContainer from '../components/map';
 
 import '../components/css/main.css';
 
@@ -11,6 +12,7 @@ function Navigation() {
       <>
         <Container className="main">
             <Row>
+            <MapContainer className="mapContainer"/>
             </Row>
         </Container>  
       </>
