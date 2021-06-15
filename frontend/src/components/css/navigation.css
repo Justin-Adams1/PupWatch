@@ -1,0 +1,40 @@
+.navBar{
+    margin-left: 10%;
+    margin-right: 25%;
+    margin-top: 10px;
+}
+
+.linkButtonDefault{
+    border-radius: 50%;
+}
+
+.navItem{
+    margin: 10px;
+    border-color: #563059;
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 50px;
+    font-size: 45px;
+    color: #563059;
+    background-color: white;
+}
+.navItem:active{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItem:hover{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItem:target{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItem:focus{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
