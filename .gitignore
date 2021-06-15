@@ -38,6 +38,7 @@ bower_components
 build/Release
 
 # Dependency directories
+/frontend/src/config.json
 /backend/node_modules/*
 /frontend/node_modules/*
 /backend/config/*

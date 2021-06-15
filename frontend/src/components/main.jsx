@@ -11,9 +11,6 @@ function Navigation() {
       <>
         <Container className="main">
             <Row>
-                <Col>
-                    Body Colum
-                </Col>
             </Row>
         </Container>  
       </>
