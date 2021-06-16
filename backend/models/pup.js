@@ -6,7 +6,7 @@ const pupSchema = new mongoose.Schema({
     likes: {type: Number, default: 0},
     dislikes: {type: Number, default: 0},
     allergyInfo: {type: String, require: true, minlength: 2, maxlength: 300},
-    picture: { data: Buffer, contentType: String },
+    pupImg: { data: Buffer, contentType: String },
     date: {type: Date, default: Date.now}
 })
 

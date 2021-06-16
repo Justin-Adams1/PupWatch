@@ -106,7 +106,9 @@ router.put("/uploadmulter/:id", upload.single('ownerImg'), async (req, res) => {
  // upload a pup image
 router.put("/uploadmulter/:id/pup", upload.single('picture'), async (req, res) => {
     try{
-     const user = await User.findByIdAndUpdate(req.params.id, { pup: {picture: req.file.path}});
+     const user = await User.findByIdAndUpdate(req.params.id, { 
+         pup: {pupImg: req.file.path}
+        });
      if (!user)
      return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);
  
