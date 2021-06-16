@@ -10,8 +10,13 @@ export class MapContainer extends Component {
       height: '600px',
     }
     return (
-      <Map google={this.props.google} zoom={14} containerStyle={style}>
-      </Map>
+      <Map google={this.props.google} 
+      zoom={16} 
+      containerStyle={style}
+      initialCenter={{
+        lat: 38.0202145,
+        lng: -85.6470396
+      }}/>
     );
   }
 }

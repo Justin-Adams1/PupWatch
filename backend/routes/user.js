@@ -177,6 +177,18 @@ router.get('/populateAddress', auth, async (req, res) => {
     }
 }); 
 
+//get a user and return only a couple variables
+router.get('/:id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+            .select({ _id: 1, name: 1, email: 1, ownerImg: 1, aboutMe: 1, pup: 1, puplist: 1, pendingpups: 1, address: 1})
+            return res.send(user);
+        
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+}); 
+
 
 
 module.exports = router;

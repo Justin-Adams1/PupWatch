@@ -163,6 +163,7 @@ window.env = {
   "npm_package_dependencies_bootstrap": "^5.0.1",
   "npm_package_dependencies_config": "^3.3.6",
   "npm_package_dependencies_cors": "^2.8.5",
+  "npm_package_dependencies_crypto": "^1.0.1",
   "npm_package_dependencies_dotenv": "^10.0.0",
   "npm_package_dependencies_express": "^4.17.1",
   "npm_package_dependencies_google_maps_react": "^2.0.6",
