@@ -7,7 +7,7 @@ import Register from './components/register';
 import PlayPen from './components/playpen';
 import Home from './components/home';
 import config from "./config.json";
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
@@ -19,6 +19,7 @@ import Logo from './components/css/pawlogo.jpg'
 import './components/css/main.css';
 
 const apiKey = config.API_KEY;
+const jwt = localStorage.getItem('token');
 
 function App() {
 
@@ -40,6 +41,12 @@ function App() {
               <Route exact path="/home" component={Home} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/register" component={Register} />
+              {!jwt ?
+                <Redirect to="/login" />
+              :
+              <>
+              </>
+              }
             </Switch>
           </Router>   
         </Row> 

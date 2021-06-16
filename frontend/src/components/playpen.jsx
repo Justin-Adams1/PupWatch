@@ -15,32 +15,32 @@ import { copyFileSync } from 'fs';
 
 const Profile = (props)=>{
     
-    const jwt = localStorage.getItem('token');
-    const userObject = jwtDecode(jwt);
+    // const jwt = localStorage.getItem('token');
+    // const userObject = jwtDecode(jwt);
     const [user, setUser] = useState();
     const [uploadedImage, setUploadedImage] = useState("");
     const userId = useRef("");
 
-    const authUser = async (userObject, jwt)=>{
-      try{
-        const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
-        setUser(user.data);  
-        setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
-        console.log(user);
-      }catch(error){
-        console.log(error);
-      }
-    }
+    // const authUser = async (userObject, jwt)=>{
+    //   try{
+    //     const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
+    //     setUser(user.data);  
+    //     setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
+    //     console.log(user);
+    //   }catch(error){
+    //     console.log(error);
+    //   }
+    // }
 
-    useEffect(() => {
-        const jwt = localStorage.getItem('token');
-        const userObject = jwtDecode(jwt);
-        authUser(userObject, jwt);
-        userId.current = userObject;
-        console.log("Profile Page Load")
-    },[]);
+    // useEffect(() => {
+    //     const jwt = localStorage.getItem('token');
+    //     const userObject = jwtDecode(jwt);
+    //     authUser(userObject, jwt);
+    //     userId.current = userObject;
+    //     console.log("Profile Page Load")
+    // },[]);
     
-    console.log("GotUserObject?", userObject)
+    // console.log("GotUserObject?", userObject)
 
     return(
         <>
