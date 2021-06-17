@@ -59,6 +59,8 @@
     width: 1400px;
     height: 590px;
     padding-top: 5px;
+    font-size: 14px;
+    color: #563059;
 }
 .pupProfileStyle{
     justify-content: center;
