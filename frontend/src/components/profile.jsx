@@ -231,13 +231,13 @@ return(
                           <Form onSubmit={(event)=>submitBoardingInfo(event)}>
 
                           <Form.Group>
-                            <Form.Label>Atmosphere</Form.Label>
-                              <Form.Control type="boardingAtmosphere" placeholder={user.boardingAtmosphere}onChange={boardingAtmosphereChange}/>
+                              <Form.Label>Atmosphere</Form.Label>
+                              <Form.Control as="textarea" defaultValue={user.boardingAtmosphere} placeholder={user.boardingAtmosphere}onChange={boardingAtmosphereChange}/>
                           </Form.Group>
 
                           <Form.Group>
-                            <Form.Label>About My Boarding description:</Form.Label>
-                              <Form.Control type="boardingDescription" placeholder={user.boardingDescription} onChange={boardingDescriptionChange}/>
+                              <Form.Label>About My Boarding description:</Form.Label>
+                              <Form.Control rows={12} as="textarea" defaultValue={user.boardingDescription} placeholder={user.boardingDescription} onChange={boardingDescriptionChange}/>
                           </Form.Group>
 
                           <Button className="navItemSmall" type="submit">Update My Boarding Info</Button>
@@ -264,31 +264,32 @@ return(
                     <Col className="pupDataCol">                                         
                       <Form onSubmit={(event)=>addPup(event)}>
 
-                      <Form.Group>
-                        <Form.Label>Name</Form.Label>
-                          <Form.Control type="name" defaultValue={pupName} placeholder={pupName}onChange={pupNameChange}/>
-                      </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" defaultValue={pupName} placeholder={pupName} onChange={pupNameChange}/>
+                        </Form.Group>
 
-                      <Form.Group>
-                        <Form.Label>About My Pup!</Form.Label>
-                          <Form.Control type="aboutme" defaultValue={pupAboutMe} placeholder={pupAboutMe} onChange={pupAboutMeChange}/>
-                      </Form.Group>
+                        <Form.Group>
+                          <Form.Label>About My Pup!</Form.Label>
+                            <Form.Control rows={2} as="textarea" defaultValue={pupAboutMe} placeholder={pupAboutMe} onChange={pupAboutMeChange}/>
+                        </Form.Group>
 
-                      <Form.Group>
-                        <Form.Label>Pup Likes</Form.Label>
-                          <Form.Control type="likes" defaultValue={pupLikes} placeholder={pupLikes}onChange={pupLikesChange}/>
-                      </Form.Group>
+                        <Form.Group>
+                          <Form.Label>Pup Likes</Form.Label>
+                            <Form.Control as="textarea" defaultValue={pupLikes} placeholder={pupLikes}onChange={pupLikesChange}/>
+                        </Form.Group>
 
-                      <Form.Group>
-                        <Form.Label>Pup Dislikes</Form.Label>
-                        <Form.Control type="dislikes" defaultValue={pupDislikes} placeholder={pupDislikes} onChange={pupDislikesChange}/>
-                      </Form.Group>
+                        <Form.Group>
+                          <Form.Label>Pup Dislikes</Form.Label>
+                          <Form.Control as="textarea" defaultValue={pupDislikes} placeholder={pupDislikes} onChange={pupDislikesChange}/>
+                        </Form.Group>
                       
-                      <Form.Group>
-                        <Form.Label>Allergies</Form.Label>
-                          <Form.Control type="allergyInfo" defaultValue={pupAllergy} placeholder={pupAllergy}onChange={pupAllergyChange}/>
-                      </Form.Group>                   
-                      <Button className="navItemSmall" type="submit">Update Pup!</Button>
+                        <Form.Group>
+                          <Form.Label>Allergies</Form.Label>
+                            <Form.Control as="textarea" defaultValue={pupAllergy} placeholder={pupAllergy}onChange={pupAllergyChange}/>
+                        </Form.Group>   
+                                        
+                        <Button className="navItemSmall" type="submit">Update Pup!</Button>
                     </Form>
                   </Col>   
                   </Row>

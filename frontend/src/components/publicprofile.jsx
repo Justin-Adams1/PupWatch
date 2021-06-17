@@ -232,12 +232,14 @@ return(
 
                           <Form.Group>
                             <Form.Label>Atmosphere</Form.Label>
-                              <Form.Control type="boardingAtmosphere" placeholder={user.boardingAtmosphere}onChange={boardingAtmosphereChange}/>
+                              <Form.Control onChange={boardingAtmosphereChange}/>
+                              <Form.TextArea rows="4" placeholder={user.boardingAtmosphere} />
                           </Form.Group>
 
                           <Form.Group>
-                            <Form.Label>About My Boarding description:</Form.Label>
-                              <Form.Control type="boardingDescription" placeholder={user.boardingDescription} onChange={boardingDescriptionChange}/>
+                              <Form.Label>About My Boarding description:</Form.Label>
+                              <Form.Control onChange={boardingDescriptionChange}/>
+                              <Form.TextArea rows="4" placeholder={user.boardingDescription} />
                           </Form.Group>
 
                           <Button className="navItemSmall" type="submit">Update My Boarding Info</Button>
