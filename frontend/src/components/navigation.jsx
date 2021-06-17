@@ -1,7 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
+import { useState, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
+import './css/main.css';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import MapContainer from './map';
 
 import '../components/css/navigation.css';
 
@@ -28,16 +32,23 @@ const goRegister = () => {
 
 
 function Navigation() {
+    
+    const jwt = localStorage.getItem('token');
+
   return (
       <>
         <Container className="navBar">
-                <Button className="navItem" onClick={goHome}>Home
-                </Button>
-
+            {!jwt ?
+                <>
                 <Button className="navItem" onClick={goLogin}>Login
                 </Button>
 
                 <Button className="navItem" onClick={goRegister}>Register
+                </Button>
+                </>
+            :
+                <>
+                <Button className="navItem" onClick={goHome}>Home
                 </Button>
 
                 <Button className="navItem" onClick={goProfile}>Profile
@@ -45,6 +56,8 @@ function Navigation() {
 
                 <Button className="navItem" onClick={goPlayPen}>Play Pen
                 </Button>
+                </>
+            }
         </Container>  
       </>
   );

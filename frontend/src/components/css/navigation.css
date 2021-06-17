@@ -1,5 +1,5 @@
 .navBar{
-    margin-left: 5%;
+    margin-left: 25%;
     margin-right: 25%;
     margin-top: 10px;
 }
@@ -66,6 +66,36 @@
     color: white;
 }
 .navItemSmall:focus{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall2{
+    margin: 10px;
+    border-color: #563059;
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 50px;
+    font-size: 16px;
+    color: #563059;
+    background-color: white;
+}
+.navItemSmall2:active{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall2:hover{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall2:target{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall2:focus{
     background-color: #563059;
     border-color: #563059;
     color: white;

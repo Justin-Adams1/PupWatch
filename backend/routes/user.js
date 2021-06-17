@@ -47,7 +47,23 @@ router.post('/', async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             address: req.body.address,
-            password: await bcrypt.hash(req.body.password, salt)
+            password: await bcrypt.hash(req.body.password, salt),
+            ownerImg: "",
+            pupList: [],
+            pendingPups: [],
+            boardingAtmosphere: "",
+            boardingDescription: "",
+            aboutMe: "",
+            address: "",
+            geoAddress: "",
+            pup: {
+                pupImg: "",
+                name: "",
+                likes: "",
+                dislikes: "",
+                aboutMe: "",
+                allergyInfo: ""
+            }
         });
 
         await user.save();
@@ -106,9 +122,11 @@ router.put("/uploadmulter/:id", upload.single('ownerImg'), async (req, res) => {
  });
 
  // upload a pup image
-router.put("/uploadmulter/:id/pup", upload.single('pupImg'), async (req, res) => {
+router.put("/uploadmulter/:id/pup", upload.single("pupImg"), async (req, res) => {
     try{
-     const user = await User.findByIdAndUpdate(req.params.id, {pup: {pupImg: req.file.path} });
+     const user = await User.findByIdAndUpdate(req.params.id, {pup: {pupImg: req.file.path }
+     }, { new: true });
+     
      if (!user)
      return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);
  
@@ -122,14 +140,15 @@ router.put("/uploadmulter/:id/pup", upload.single('pupImg'), async (req, res) =>
  });
 
  // update owner profile
- router.put('/:id/aboutme', auth, async (req, res) => {
+ router.put('/:id/updateinfo', auth, async (req, res) => {
      try{
          const user = await User.findByIdAndUpdate(
              req.params.id,
              {
-                 aboutMe: req.body.aboutMe,
-                 address: req.body.address
-             },
+                boardingAtmosphere: req.body.boardingAtmosphere,
+                boardingDescription: req.body.boardingDescription,
+              },
+              { new: true }
          );
  
          if (!user)
@@ -149,10 +168,12 @@ router.put("/uploadmulter/:id/pup", upload.single('pupImg'), async (req, res) =>
          const user = await User.findByIdAndUpdate(
              req.params.id,
              { pup: {
+                 name: req.body.name,
                  aboutMe: req.body.aboutMe,
                  likes: req.body.likes,
                  dislikes: req.body.dislikes,
-                 allergyInfo: req.body.allergyInfo
+                 allergyInfo: req.body.allergyInfo,
+                 pupImg: req.body.pupImg
              }},
          );
  
@@ -183,7 +204,7 @@ router.get('/populateAddress', auth, async (req, res) => {
 router.get('/:id', auth, async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
-            .select({ _id: 1, name: 1, email: 1, ownerImg: 1, aboutMe: 1, pup: 1, puplist: 1, pendingpups: 1, address: 1})
+            // .select({ _id: 1, name: 1, email: 1, ownerImg: 1, aboutMe: 1, pup: 1, puplist: 1, pendingpups: 1, address: 1})
             return res.send(user);
         
     } catch (ex) {

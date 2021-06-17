@@ -12,9 +12,11 @@ const userSchema = new mongoose.Schema({
     pendingPups: {type: [String]},
     pup: { type: Pup },
     address: {type: String},
-    locationPicture1: { data: Buffer, contentType: String },
-    locationPicture2: { data: Buffer, contentType: String },
-    aboutMe: { type: String, minlength: 5, maxlength: 500 },
+    boardingAtmosphere: {type: String},
+    boardingDescription: {type: String},
+    boardingPicture1: { data: Buffer, contentType: String },
+    boardingPicture2: { data: Buffer, contentType: String },
+    aboutMe: { type: String, maxlength: 500 },
     ownerImg: { data: Buffer, contentType: String },
 });
 
