@@ -7,6 +7,20 @@
 .linkButtonDefault{
     border-radius: 50%;
 }
+.pupImgCol{
+    margin: 10px;
+    font-size: 45px;
+    color: #563059;
+    background-color: white;
+    padding-left: 60px;
+}
+.pupDataCol{
+    margin: 10px;
+    font-size: 25px;
+    color: #563059;
+    background-color: white;
+    padding-left: 60px;
+}
 
 .navItem{
     margin: 10px;
@@ -76,7 +90,7 @@
     border-style: solid;
     border-width: 10px;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 14px;
     color: #563059;
     background-color: white;
 }

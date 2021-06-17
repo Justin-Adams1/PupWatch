@@ -89,7 +89,8 @@ router.put('/:id', auth, async (req, res) => {
                 aboutMe: req.body.aboutMe,
                 likes: req.body.likes,
                 dislikes: req.body.dislikes,
-                allergyInfo: req.body.allergyInfo
+                allergyInfo: req.body.allergyInfo,
+                pupImg: req.body.pupImg
             }},
             { new: true }
         );

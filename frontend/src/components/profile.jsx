@@ -109,6 +109,12 @@ const Profile = (props)=>{
         setUser(user.data);  
         setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
         setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
+        console.log("pup", user.data.pup);
+        setPupAboutMe(user.data.pup.aboutMe);
+        setPupName(user.data.pup.name);
+        setPupLikes(user.data.pup.likes);
+        setPupDislikes(user.data.pup.dislikes);
+        setPupAllergy(user.data.pup.allergyInfo);
         console.log("received user:", user);
       }catch(error){
         console.log(error);
@@ -168,11 +174,11 @@ const submitAddPup = (event) => {
   
   console.log('pupImgChange',selectedFile[0])
   const formData = new FormData();
-  formData.append("name", pupName);
-  formData.append("likes", pupLikes);
-  formData.append("dislikes", pupDislikes);
-  formData.append("aboutMe", pupAboutMe);
-  formData.append("allergyInfo", pupAllergy);
+  // formData.append("name", pupName);
+  // formData.append("likes", pupLikes);
+  // formData.append("dislikes", pupDislikes);
+  // formData.append("aboutMe", pupAboutMe);
+  // formData.append("allergyInfo", pupAllergy);
   formData.append("pupImg", selectedFile[0]);
   
   var config = {
@@ -239,87 +245,63 @@ return(
                       </Row>
                 </Col>
               </Row>
-                {user.pup.name ?
+                {user.pup.pupImg ?
                   <Row className="pupProfileStyle">
                     <Col>
-                    <h1> {user.pup.name}  </h1>      
-                        <PupImage  url={uploadedPupImage}/>            
-                    </Col>                                  
-                          <Col>                                         
-                      <Form onSubmit={(event)=>submitAddPup(event)} encType='multipart/form-data'>
-                      <Form.Group>
-                        <Form.Label>Name</Form.Label>
-                          <Form.Control type="file" default={user.pup.name} placeholder={user.pup.name}onChange={pupImgChange}/>
-                      </Form.Group>
+                    <Row className="popImgCol">
+                      <Col className="pupImgCol">
+                      <h1> {pupName}  </h1>      
+                          <PupImage  url={uploadedPupImage}/>            
+                      </Col>        
+                    </Row>
+                    <Row>
+                          <form onSubmit={submitAddPup} encType='multipart/form-data'>
+                          <input className="navItemSmall2" type="file" name="ownerImg" onChange={pupImgChange} />
+                            <Button className="navItemSmall2" type="submit">Submit</Button>
+                          </form>  
+                    </Row>
+                    </Col>                  
+                    <Col className="pupDataCol">                                         
+                      <Form onSubmit={(event)=>addPup(event)}>
 
                       <Form.Group>
                         <Form.Label>Name</Form.Label>
-                          <Form.Control type="name"  default={user.pup.name} placeholder={user.pup.name}onChange={pupNameChange}/>
+                          <Form.Control type="name" defaultValue={pupName} placeholder={pupName}onChange={pupNameChange}/>
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>About My Pup!</Form.Label>
-                          <Form.Control type="aboutme" default={user.pup.aboutMe} placeholder={user.pup.aboutMe} onChange={pupAboutMeChange}/>
+                          <Form.Control type="aboutme" defaultValue={pupAboutMe} placeholder={pupAboutMe} onChange={pupAboutMeChange}/>
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>Pup Likes</Form.Label>
-                          <Form.Control type="likes"  default={user.pup.likes} placeholder={user.pup.likes}onChange={pupLikesChange}/>
+                          <Form.Control type="likes" defaultValue={pupLikes} placeholder={pupLikes}onChange={pupLikesChange}/>
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>Pup Dislikes</Form.Label>
-                        <Form.Control type="dislikes"  default={user.pup.dislikes} placeholder={user.pup.dislikes} onChange={pupDislikesChange}/>
+                        <Form.Control type="dislikes" defaultValue={pupDislikes} placeholder={pupDislikes} onChange={pupDislikesChange}/>
                       </Form.Group>
                       
                       <Form.Group>
                         <Form.Label>Allergies</Form.Label>
-                          <Form.Control type="allergyInfo"  default={user.pup.allergyInfo} placeholder={user.pup.allergyInfo}onChange={pupAllergyChange}/>
+                          <Form.Control type="allergyInfo" defaultValue={pupAllergy} placeholder={pupAllergy}onChange={pupAllergyChange}/>
                       </Form.Group>                   
-                      <Button className="navItemSmall" type="submit">Add Pup!</Button>
+                      <Button className="navItemSmall" type="submit">Update Pup!</Button>
                     </Form>
                   </Col>   
                   </Row>
                 : 
-                  <Row className="pupProfileStyle" height="300px">  
-                  <Col>     
-                    <PupImage url={uploadedPupImage}/> 
-                  </Col>   
-                  <Col>                                         
-                      <Form onSubmit={(event)=>addPup(event)}>
-
-                      <Form.Group>
-                        <Form.Label></Form.Label>
-                          <Form.Control className="navItemSmall2" type="file" name="pupImg" onChange={pupImgChange} />
-                      </Form.Group>
-
-                      <Form.Group>
-                        <Form.Label>Name</Form.Label>
-                          <Form.Control type="name" default={user.pup.name} placeholder={user.pup.name}onChange={pupNameChange}/>
-                      </Form.Group>
-
-                      <Form.Group>
-                        <Form.Label>About My Pup!</Form.Label>
-                          <Form.Control type="aboutme" default={user.pup.aboutMe} placeholder={user.pup.aboutMe} onChange={pupAboutMeChange}/>
-                      </Form.Group>
-
-                      <Form.Group>
-                        <Form.Label>Pup Likes</Form.Label>
-                          <Form.Control type="likes" default={user.pup.likes} placeholder={user.pup.likes}onChange={pupLikesChange}/>
-                      </Form.Group>
-
-                      <Form.Group>
-                        <Form.Label>Pup Dislikes</Form.Label>
-                        <Form.Control type="dislikes" default={user.pup.dislikes} placeholder={user.pup.dislikes} onChange={pupDislikesChange}/>
-                      </Form.Group>
-                      
-                      <Form.Group>
-                        <Form.Label>Allergies</Form.Label>
-                          <Form.Control type="allergyInfo" default={user.pup.allergyInfo} placeholder={user.pup.allergyInfo}onChange={pupAllergyChange}/>
-                      </Form.Group>     
-                      <Button className="navItemSmall" type="submit">Add Pup!</Button>              
-                    </Form>
-                  </Col>
+                  <Row className="pupProfileStyle" height="300px">
+                    <h3>Upload an image of your Pup to get started!</h3>
+                    <PupImage url={uploadedPupImage}/>
+                    <form onSubmit={submitAddPup} encType='multipart/form-data'>
+                    <input type="file" name="ownerImg" onChange={pupImgChange} />
+                    <div className="loginText">
+                    <Button className="btn btn-success btn-md" type="submit">Submit</Button>
+                    </div>  
+                    </form>
                   </Row>
               }
             </Container>
