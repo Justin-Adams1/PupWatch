@@ -16,12 +16,14 @@ const Profile = (props)=>{
     const [user, setUser] = useState();
     const [uploadedImage, setUploadedImage] = useState("");
     const userId = useRef("");
+    const [geoAddress, setGeoAddress] = useState([]);
 
     const authUser = async (userObject, jwt)=>{
       try{
         const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
         setUser(user.data);  
         setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
+        setGeoAddress(user.data.geoAddress);
         console.log(user);
       }catch(error){
         console.log(error);
@@ -35,12 +37,10 @@ const Profile = (props)=>{
         userId.current = userObject;
         console.log("Profile Page Load")
     },[]);
-    
-    console.log("GotUserObject?", userObject)
 
     return(
         <>
-          <MapContainer className="mapContainer"/>
+          <MapContainer className="mapContainer" props={geoAddress}/>
         </>
     )
 }

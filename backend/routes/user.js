@@ -46,16 +46,9 @@ router.post('/', async (req, res) => {
         user = new User({
             name: req.body.name,
             email: req.body.email,
-            address: req.body.address,
             password: await bcrypt.hash(req.body.password, salt),
-            ownerImg: "",
-            pupList: [],
-            pendingPups: [],
-            boardingAtmosphere: "",
-            boardingDescription: "",
-            aboutMe: "",
-            address: "",
-            geoAddress: "",
+            pupList: [""],
+            pendingPups: [""],
             pup: {
                 pupImg: "",
                 name: "",
@@ -63,37 +56,104 @@ router.post('/', async (req, res) => {
                 dislikes: "",
                 aboutMe: "",
                 allergyInfo: ""
-            }
+            },
+            address: req.body.address,
+            boardingAtmosphere: "",
+            boardingDescription: "",
+            boardingPicture1: "",
+            boardingPicture2: "",
+            aboutMe: "",
+            ownerImg: "",
+            geoAddress: req.body.geoAddress,
         });
 
         await user.save();
 
         const token = user.generateAuthToken();
+
         
         return res
             .header('x-auth-token', token)
             .header('access-control-expose-headers', 'x-auth-token')
-            .send({ _id: user._id, name: user.name, email: user.email });
+            .send({ token: token});
 }catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
 }
 });
 
 //post a Pup to a User
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id/changeall/', auth, async (req, res) => {
     try{
         const user = await User.findByIdAndUpdate(
             req.params.id,
-            { pup: {
+            { 
+                pup: {  name: req.body.pupname, 
+                        aboutMe: req.body.pupaboutMe,
+                        likes: req.body.puplikes,
+                        dislikes: req.body.pupdislikes,
+                        allergyInfo: req.body.pupallergyInfo,
+                        pupImg: req.body.pupImg 
+                    },      
                 name: req.body.name,
+                email: req.body.email,
                 aboutMe: req.body.aboutMe,
-                likes: req.body.likes,
-                dislikes: req.body.dislikes,
-                allergyInfo: req.body.allergyInfo,
-                pupImg: req.body.pupImg
-            }},
+                ownerImg: req.body.ownerImg,
+                boardingAtmosphere: req.body.boardingAtmosphere,
+                boardingDescription: req.body.boardingDescription,
+                pupList: req.body.pupList,
+                pendingPups: req.body.pendingPups,
+                address: req.body.address,
+                boardingPicture1: req.body.boardingPicture1,
+                boardingPicture2: req.body.boardingPicture2,
+                geoAddress: req.body.geoAddress,
+            },
             { new: true }
         );
+
+            console.log(user)
+
+        if (!user)
+        return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);
+
+        await user.save();
+
+        return res.send(user);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+
+
+//put change profile
+router.put('/:id/changeall', auth, async (req, res) => {
+    try{
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            { 
+                pup: {  name: req.body.pupName, 
+                        aboutMe: req.body.pupAboutMe,
+                        likes: req.body.pupLikes,
+                        dislikes: req.body.pupDislikes,
+                        allergyInfo: pupAllergyInfo,
+                        pupImg: req.body.pupImg },      
+                name: req.body.name,
+                email: req.body.email,
+                aboutMe: req.body.aboutMe,
+                ownerImg: req.body.ownerImg,
+                boardingAtmosphere: req.body.boardingAtmosphere,
+                boardingDescription: req.body.boardingDescription,
+                pupList: req.body.pupList,
+                pendingPups: req.body.pendingPups,
+                address: req.body.address,
+                boardingPicture1: req.body.boardingPicture1,
+                boardingPicture2: req.body.boardingPicture2,
+                geoAddress: req.body.geoAddress,
+            },
+            { new: true }
+        );
+
+        console.log(user)
 
         if (!user)
         return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);
@@ -141,16 +201,47 @@ router.put("/uploadmulter/:id/pup", upload.single("pupImg"), async (req, res) =>
  });
 
  // update owner profile
+ router.put('/:id/updateAccount', auth, async (req, res) => {
+     try{
+         const user = await User.findByIdAndUpdate(
+             req.params.id, {
+                name: req.body.name, 
+                email: req.body.email, 
+                pupList: req.body.pupList,
+                pendingPups: req.body.pendingPups,
+                aboutMe: req.body.aboutMe,
+            },
+              { new: true }
+         );
+
+         console.log(user);
+ 
+         if (!user)
+         return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);
+ 
+         await user.save();
+ 
+         return res.send(user);
+     } catch (ex) {
+         return res.status(500).send(`Internal Server Error: ${ex}`);
+     }
+ });
+ 
+ // update owner profile
  router.put('/:id/updateinfo', auth, async (req, res) => {
      try{
          const user = await User.findByIdAndUpdate(
-             req.params.id,
-             {
-                boardingAtmosphere: req.body.boardingAtmosphere,
-                boardingDescription: req.body.boardingDescription,
-              },
+             req.params.id, {
+                name: req.body.name, 
+                email: req.body.email, 
+                pupList: req.body.pupList,
+                pendingPups: req.body.pendingPups,
+                aboutMe: req.body.aboutMe,
+            },
               { new: true }
          );
+
+         console.log(user);
  
          if (!user)
          return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);

@@ -16,6 +16,7 @@ import PupImage from './pupimg';
 
 const Profile = (props)=>{
     
+    
     const jwt = localStorage.getItem('token');
     const userObject = jwtDecode(jwt);
     const [user, setUser] = useState();
@@ -59,17 +60,28 @@ const Profile = (props)=>{
 
     const addPup = (event) => {
       event.preventDefault();
-      console.log(pupName);
       try{
       axios
-          .put(`http://localhost:5000/api/user/${userObject._id}/aboutme/pup/`,
+          .put(`http://localhost:5000/api/user/${userObject._id}/changeall/`,
           {
-            name: pupName,
-            aboutMe: pupAboutMe,
-            likes: pupLikes,
-            dislikes: pupDislikes,
-            allergyInfo: pupAllergy,
-            pupImg: user.pup.pupImg
+              pupname: pupName, 
+              pupaboutMe: pupAboutMe, 
+              puplikes: pupLikes, 
+              pupdislikes: pupDislikes, 
+              pupallergyInfo: pupAllergy,
+              pupImg: user.pup.pupImg,
+              name: user.name,
+              email: user.email,
+              aboutMe: user.aboutMe,
+              ownerImg: user.ownerImg,
+              boardingAtmosphere: boardingAtmosphere,
+              boardingDescription: boardingDescription,
+              pupList: user.pupList,
+              pendingPups: user.pendingPups,
+              address: user.address,
+              boardingPicture1: user.boardingPicture1,
+              boardingPicture2: user.boardingPicture2,
+              geoAddress: user.geoAddress,
           }, 
           {headers: {"x-auth-token": jwt}}
           )
@@ -82,21 +94,73 @@ const Profile = (props)=>{
       }
   }
 
+//   const changeOwner = (event) => {
+//     event.preventDefault();
+
+//     console.log("user", user);
+//     console.log("pup", pupName)
+
+//     try{
+//     axios
+//         .put(`http://localhost:5000/api/user/${userObject._id}/changeall`,
+//         {
+//           pupName: pupName,
+//           pupAboutMe: pupAboutMe,
+//           pupLikes: pupLikes,
+//           pupDislikes: pupDislikes,
+//           pupAllergyInfo: pupAllergy,
+//           pupImg: user.pup.pupImg,
+
+//           name: user.name,
+//           email: user.email,
+//           aboutMe: user.aboutMe,
+//           ownerImg: user.ownerImg,
+//           boardingAtmosphere: boardingAtmosphere,
+//           boardingDescription: boardingDescription,
+//           pupList: user.pupList,
+//           pendingPups: user.pendingPups,
+//           address: user.address,
+//           boardingPicture1: user.boardingPicture1,
+//           boardingPicture2: user.boardingPicture2,
+//           geoAddress: user.geoAddress,
+//         }, 
+//         {headers: {"x-auth-token": jwt}}
+//         )
+//         .then(response => {
+//             console.log(response);
+//             window.location = '/profile';
+//         });
+//     }catch(error){
+//       console.log(error);
+//     }
+// }
+// const handleClick = (event) => {
+//   event.preventDefault();
+//   console.log("changing info out", user.id);
+//   axios
+//       .put(`http://localhost:5000/api/user/${userObject._id}/updateAccount`, {
+//         boardingAtmosphere: boardingAtmosphere,
+//         boardingDescription: boardingDescription,
+//       },{headers: {"x-auth-token": jwt}})
+//       .then(response => {
+//           console.log(response);
+//           window.location = '/account';
+//       });
+// }
+
+
     const submitBoardingInfo = (event) => {
         event.preventDefault();
         try{
-        axios
-            .put(`http://localhost:5000/api/user/${userObject._id}/updateinfo`,
-            {
-              boardingAtmosphere: boardingAtmosphere,
-              boardingDescription: boardingDescription,
-            }, 
-            {headers: {"x-auth-token": jwt}}
-            )
-            .then(response => {
-                console.log(response);
-                window.location = '/profile';
-            });
+          axios
+          .put(`http://localhost:5000/api/user/${userObject._id}/updateinfo`, {
+            boardingAtmosphere: boardingAtmosphere,
+            boardingDescription: boardingDescription,
+          },{headers: {"x-auth-token": jwt}})
+          .then(response => {
+              console.log(response);
+              window.location = '/account';
+          });
         }catch(error){
           console.log(error);
         }
@@ -115,6 +179,8 @@ const Profile = (props)=>{
         setPupLikes(user.data.pup.likes);
         setPupDislikes(user.data.pup.dislikes);
         setPupAllergy(user.data.pup.allergyInfo);
+        setBoardingAtmosphere(user.data.boardingAtmosphere);
+        setBoardingDescription(user.data.boardingDescription);
         console.log("received user:", user);
       }catch(error){
         console.log(error);
@@ -127,7 +193,8 @@ const Profile = (props)=>{
         authUser(userObject, jwt);
         userId.current = userObject;
         console.log("Profile Page Load")
-    },[setIsSelected, setUploadedPupImage]);
+        
+    },[setIsSelected, setUploadedPupImage, setBoardingAtmosphere, setBoardingDescription, setPupName, setPupLikes, setPupDislikes, setPupAllergy]);
 
     const logOut = () => {
         localStorage.removeItem('token');
@@ -174,11 +241,6 @@ const submitAddPup = (event) => {
   
   console.log('pupImgChange',selectedFile[0])
   const formData = new FormData();
-  // formData.append("name", pupName);
-  // formData.append("likes", pupLikes);
-  // formData.append("dislikes", pupDislikes);
-  // formData.append("aboutMe", pupAboutMe);
-  // formData.append("allergyInfo", pupAllergy);
   formData.append("pupImg", selectedFile[0]);
   
   var config = {
@@ -228,16 +290,16 @@ return(
                 </Col>
                 <Col className="profileStyle2">
                       <Row height="300px">              
-                          <Form onSubmit={(event)=>submitBoardingInfo(event)}>
+                          <Form onSubmit={(event)=>addPup(event)}>
 
                           <Form.Group>
                               <Form.Label>Atmosphere</Form.Label>
-                              <Form.Control as="textarea" defaultValue={user.boardingAtmosphere} placeholder={user.boardingAtmosphere}onChange={boardingAtmosphereChange}/>
+                              <Form.Control as="textarea" defaultValue={boardingAtmosphere} placeholder={boardingAtmosphere}onChange={boardingAtmosphereChange}/>
                           </Form.Group>
 
                           <Form.Group>
                               <Form.Label>About My Boarding description:</Form.Label>
-                              <Form.Control rows={12} as="textarea" defaultValue={user.boardingDescription} placeholder={user.boardingDescription} onChange={boardingDescriptionChange}/>
+                              <Form.Control rows={12} as="textarea" defaultValue={boardingDescription} placeholder={boardingDescription} onChange={boardingDescriptionChange}/>
                           </Form.Group>
 
                           <Button className="navItemSmall" type="submit">Update My Boarding Info</Button>

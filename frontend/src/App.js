@@ -4,8 +4,9 @@ import Login from './components/login';
 import Profile from './components/profile';
 import PublicProfile from './components/publicprofile';
 import Register from './components/register';
-import PlayPen from './components/playpen';
 import Home from './components/home';
+import PlayPen from './components/playpen';
+import Account from './components/account';
 import config from "./config.json";
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -15,6 +16,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navigation from './components/navigation';
 import Logo from './components/css/pawlogo.jpg'
+
 
 import './components/css/main.css';
 
@@ -37,6 +39,8 @@ function App() {
               <>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/profile" component={Profile} />
+
               </>
               :    
                 <>         
@@ -48,6 +52,7 @@ function App() {
                 <Route exact path="/home" component={Home} />
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/account" component={Account} />
                 </>
               }
             </Switch>

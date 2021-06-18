@@ -175,6 +175,7 @@ window.env = {
   "npm_package_dependencies_react_bootstrap": "^1.6.1",
   "npm_package_dependencies_react_dom": "^17.0.2",
   "npm_package_dependencies_react_dotenv": "^0.1.3",
+  "npm_package_dependencies_react_geocode": "^0.2.3",
   "npm_package_dependencies_react_hook_form": "^7.8.4",
   "npm_package_dependencies_react_router_dom": "^5.2.0",
   "npm_package_dependencies_react_scripts": "4.0.3",

@@ -8,9 +8,13 @@ import './css/main.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Navigation from './navigation';
-import Logo from './css/pawlogo.jpg'
-
+import Logo from './css/pawlogo.jpg';
+import config from "../config.json";
+import Geocode from "react-geocode";
 import '../components/css/navigation.css';
+
+const apiKey = config.API_KEY;
+
 
 const Login = () =>{
     const [email, setEmail] = useState('');
@@ -26,16 +30,30 @@ const Login = () =>{
     const handleClick = (event) => {
         event.preventDefault();
         console.log("Submit")
+
+      
+        Geocode.setApiKey(apiKey);
+      
+        Geocode.fromAddress("address").then(
+          (response) => {
+            const { lat, lng } = response.results[0].geometry.location;
+            console.log(lat, lng);
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+
         axios
             .post(`http://localhost:5000/api/auth/`, {email: email, password: password})
             .then(response => {
                 const token  = response.data;
                 localStorage.setItem('token', token);
                 window.location="/profile";
-            }).catch(error => {
-                alert("Username or Password invalid, please try again")
+                })
+            .catch(error => {
                 console.log('Error', error);
-            });
+                })
     }
 
     return(

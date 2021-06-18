@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     boardingPicture2: { data: Buffer, contentType: String },
     aboutMe: { type: String, maxlength: 500 },
     ownerImg: { data: Buffer, contentType: String },
+    geoAddress: { type: Array },
 });
 
 userSchema.methods.generateAuthToken = function (){
@@ -33,6 +34,7 @@ function validateUser(user) {
         email: Joi.string().min(5).max(255).required(),
         password: Joi.string().min(5).max(1024).required(),
         address: Joi.string().min(5).max(1024).required(),
+        geoAddress: Joi.array().required(),
     });
     return schema.validate(user);
 }

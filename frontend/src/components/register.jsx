@@ -4,12 +4,22 @@ import {useState} from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import '../components/css/navigation.css';
+import config from "../config.json";
+import Geocode from "react-geocode";
+import userEvent from '@testing-library/user-event';
+
+const apiKey = config.API_KEY;
+
+
 
 const Register = (props)=>{
     const [ email, setEmail] = useState('');
     const [ password, setPassword] = useState('');
     const [ name, setName] = useState('');
     const [ address, setAddress] = useState('');
+    const [ geoAddress, setGeoAddress] = useState([]);
+    const [ lat, setLat] = useState('');
+    const [ lng, setLng] = useState('');
 
     const emailChange = (event) => {
         setEmail(event.target.value);
@@ -19,21 +29,43 @@ const Register = (props)=>{
     };
     const nameChange = (event) => {
         setName(event.target.value);
-    }
+    };
     const addressChange = (event) => {
         setAddress(event.target.value);
-    }
+    };
 
-    const handleClick = (event) => {
-        event.preventDefault();
-        console.log(name, email, password, address);
-        axios
-            .post(`http://localhost:5000/api/user/`, {name: name, email: email, password: password, address: address})
-            .then(response => {
-                console.log(response);
-                window.location = '/';
-            });
-    }
+    const handleClick = async (event) => {
+      event.preventDefault();
+
+      await Geocode.setApiKey(apiKey);
+      await Geocode.setLocationType("ROOFTOP");
+      
+      await Geocode.fromAddress(address).then(
+        (response) => {
+          const { lat, lng } = response.results[0].geometry.location;
+
+          const geoAddress = [lat,lng];
+
+          axios
+              .post(`http://localhost:5000/api/user/`, {
+                name: name,
+                email: email,
+                password: password, 
+                address: address, 
+                geoAddress: geoAddress,
+              })
+              .then(response => {
+                  const token  = response.data.token;
+                  localStorage.setItem('token', token);
+                    window.location="/profile";
+                    })
+              .catch(error => { console.log('Error', error);})
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }        
 
     return(
         <Container>

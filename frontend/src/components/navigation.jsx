@@ -30,6 +30,10 @@ const goRegister = () => {
     window.location = '/register';
 };
 
+const goAccount = () => {
+    window.location = '/account';
+};
+
 
 function Navigation() {
     
@@ -55,6 +59,9 @@ function Navigation() {
                 </Button>
 
                 <Button className="navItem" onClick={goPlayPen}>Play Pen
+                </Button>
+
+                <Button className="navItem" onClick={goAccount}>Account
                 </Button>
                 </>
             }
