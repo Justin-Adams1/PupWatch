@@ -7,20 +7,17 @@ import Register from './components/register';
 import Home from './components/home';
 import PlayPen from './components/playpen';
 import Account from './components/account';
-import config from "./config.json";
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Navigation from './components/navigation';
 import Logo from './components/css/pawlogo.jpg'
 
 
 import './components/css/main.css';
 
-const apiKey = config.API_KEY;
 const jwt = localStorage.getItem('token');
 
 function App() {

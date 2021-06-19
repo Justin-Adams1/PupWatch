@@ -2,11 +2,9 @@
 import { Form, Table, Row, Container, Button } from 'react-bootstrap';
 import {useState} from 'react';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import '../components/css/navigation.css';
 import config from "../config.json";
 import Geocode from "react-geocode";
-import userEvent from '@testing-library/user-event';
 
 const apiKey = config.API_KEY;
 
@@ -17,9 +15,6 @@ const Register = (props)=>{
     const [ password, setPassword] = useState('');
     const [ name, setName] = useState('');
     const [ address, setAddress] = useState('');
-    const [ geoAddress, setGeoAddress] = useState([]);
-    const [ lat, setLat] = useState('');
-    const [ lng, setLng] = useState('');
 
     const emailChange = (event) => {
         setEmail(event.target.value);

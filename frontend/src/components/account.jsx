@@ -8,8 +8,6 @@ import './css/main.css';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import FormData from 'form-data';
-import { publicDecrypt } from 'crypto';
-import { copyFileSync } from 'fs';
 import '../components/css/navigation.css';
 import ProfileImage from './profileImage';
 import PupImage from './pupimg';

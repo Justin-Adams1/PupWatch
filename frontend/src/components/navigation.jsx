@@ -1,11 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import { useState, useEffect, useRef } from 'react';
+// import { useState, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
-import './css/main.css';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import MapContainer from './map';
 
 import '../components/css/navigation.css';
 

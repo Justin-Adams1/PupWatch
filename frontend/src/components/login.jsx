@@ -6,14 +6,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './css/main.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Navigation from './navigation';
-import Logo from './css/pawlogo.jpg';
 import config from "../config.json";
-import Geocode from "react-geocode";
+// import Geocode from "react-geocode";
 import '../components/css/navigation.css';
 
-const apiKey = config.API_KEY;
+// const apiKey = config.API_KEY;
 
 
 const Login = () =>{
@@ -32,17 +29,17 @@ const Login = () =>{
         console.log("Submit")
 
       
-        Geocode.setApiKey(apiKey);
+        // Geocode.setApiKey(apiKey);
       
-        Geocode.fromAddress("address").then(
-          (response) => {
-            const { lat, lng } = response.results[0].geometry.location;
-            console.log(lat, lng);
-          },
-          (error) => {
-            console.error(error);
-          }
-        );
+        // Geocode.fromAddress("address").then(
+        //   (response) => {
+        //     const { lat, lng } = response.results[0].geometry.location;
+        //     console.log(lat, lng);
+        //   },
+        //   (error) => {
+        //     console.error(error);
+        //   }
+        // );
 
         axios
             .post(`http://localhost:5000/api/auth/`, {email: email, password: password})
