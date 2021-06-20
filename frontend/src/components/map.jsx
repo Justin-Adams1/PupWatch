@@ -23,6 +23,31 @@ const MapContainer = (props)=>{
   const onInfoWindowClose = () => {
     setShowingInfoWindow(false);
   };
+  
+  const onMapClick = () => {
+    console.log("map clicked", )
+    setActiveMarker(null)
+    setShowingInfoWindow(false)
+  };
+
+  const loadInfoWindow = (marker) => {
+    console.log("infowindow", marker)
+    return(
+      <InfoWindow   
+        key={marker._id}             
+        onClose={onInfoWindowClose}
+        visible={showingInfoWindow}
+        position={ {lat: marker.geoAddress[0], lng: marker.geoAddress[1]} }
+      >   
+        <div className="infoWindow">
+                    <h3>Name: {marker.name}</h3>
+                    <h5>Location: {marker.title}</h5>
+                    <h5>Atmosphere: {marker.boardingAtmosphere}</h5>
+                    <h5>Boarding: {marker.boardingDescription}</h5>
+        </div>
+      </InfoWindow> 
+    )
+  };
 
   const loadMarkers = (props) => {
     return(
@@ -36,19 +61,6 @@ const MapContainer = (props)=>{
             address={marker.address}  
             onClick={onMarkerClick} 
           >
-          <InfoWindow                
-            onClose={onInfoWindowClose}
-            visible={showingInfoWindow}
-            position={ {lat: marker.geoAddress[0], lng: marker.geoAddress[1]} }
-          >
-            <div>
-              <h3>{marker.name}</h3>
-              <p>{marker.title}</p>
-              <h5>{marker.boardingAtmosphere}</h5>
-              <p>{marker.boardingDescription}</p>
-              <p></p>
-            </div>
-          </InfoWindow>
           </Marker>
         )
       }
@@ -65,8 +77,10 @@ const MapContainer = (props)=>{
             lat: props.geoAddress[0],
             lng: props.geoAddress[1]
             }}
+          onClick={onMapClick}
           > 
           {loadMarkers(props)}
+          {loadInfoWindow(props)}
           </Map>
       </>   
     );
