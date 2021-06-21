@@ -11,36 +11,34 @@ const MapContainer = (props)=>{
       height: '600px',    
   }
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
-  let activeMarker = useRef();
-  const [refresh, setRefresh] = useState(false);
+
+  const [internalState, setInternalState] = useState(props);
+  const previousValueRef = useRef();
+  const previousValue=previousValueRef.current;
+  if(props !== previousValue && props !== internalState) {
+    setInternalState(props);
+  }
+  useEffect(() => {
+    previousValueRef.current = props;
+  })
+
+  // value={internalState}
+  // onChange={e => setInternalState(e.currentTarget.value)}
+
 
   const onMarkerClick = (marker) => {
-    activeMarker.current=marker;
+    setInternalState(marker, showingInfoWindow)
     setShowingInfoWindow(true);
-    setRefresh(true);
   };
 
-  const onInfoWindowClose = () => {
-    setShowingInfoWindow(false);
-    setRefresh(true);
-  };
-  
   const onMapClick = () => {
-    activeMarker.current=null;
     setShowingInfoWindow(false);
-    setRefresh(true);
-    console.log(activeMarker.current)
+    console.log("state",internalState)
   };
-
-  useEffect(() => {
-    setRefresh(false)
-    console.log(activeMarker.current)
-},[refresh]);
-
 
   const loadInfoWindow = (marker, showingInfoWindow) => {
-      console.log("passed marker",marker.marker);
-      let mapInfo = {lat: marker.mapCenter.lat, lng: marker.mapCenter.lng}
+      console.log("passed marker",marker);
+      let mapInfo = {lat: marker.position.lat, lng: marker.position.lng}
         return(
           <InfoWindow
             visible={showingInfoWindow}
@@ -49,7 +47,6 @@ const MapContainer = (props)=>{
           >   
             <div className="infoWindow">
                         <h3>Name: {marker.name}</h3>
-                        <h5>Location: {marker.address}</h5>
                         <h5>Atmosphere: {marker.boardingAtmosphere}</h5>
                         <h5>Boarding: {marker.boardingDescription}</h5>
             </div>
@@ -66,7 +63,7 @@ const MapContainer = (props)=>{
             lat: props.geoAddress[0],
             lng: props.geoAddress[1]
             }}
-          onClick={() => {setShowingInfoWindow(false)}}
+          onClick={onMapClick}
           > 
           {props.markerPack.map(marker => {
             return(
@@ -76,14 +73,13 @@ const MapContainer = (props)=>{
                   position={ {lat: marker.geoAddress[0], lng: marker.geoAddress[1]} }
                   boardingAtmosphere={marker.boardingAtmosphere}
                   boardingDescription={marker.boardingDescription}
-                  address={marker.address}  
                   onClick={onMarkerClick}
                   
                 >
                 </Marker>
             )})}
             {showingInfoWindow ?
-              loadInfoWindow(activeMarker.current, showingInfoWindow)  
+              loadInfoWindow(internalState, showingInfoWindow)  
               :
               <>
               </>          
