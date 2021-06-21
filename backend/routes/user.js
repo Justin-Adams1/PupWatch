@@ -284,7 +284,7 @@ router.put("/uploadmulter/:id/pup", upload.single("pupImg"), async (req, res) =>
 router.get('/populateAddress', auth, async (req, res) => {
     try {
         const user = await User.find()
-            .select({ _id: 1, name: 1, address: 1, geoAddress: 1, boardingAtmosphere: 1})
+            .select({ _id: 1, name: 1, address: 1, geoAddress: 1, boardingAtmosphere: 1, boardingDescription: 1})
             console.log(user);
             return res.send(user);
         

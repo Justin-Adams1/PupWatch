@@ -50,7 +50,7 @@ const Profile = (props)=>{
         const userObject = jwtDecode(jwt);
         authUser(userObject, jwt);
         userId.current = userObject;
-        console.log("Profile Page Load")
+        console.log("Profile Page Load");
     },[]);
 
     return(
