@@ -1,8 +1,17 @@
 import {Map, InfoWindow, Marker, Maps, GoogleApiWrapper} from 'google-maps-react';
-import { React, Component, useState, setState, useEffect, useRef} from 'react';
+import { React, useState,  useEffect, useRef, useCallback} from 'react';
+import ProfileImage from './infoWindowPic';
+import MessageForm from './messageForm';
 import config from '../config.json';
 import './css/main.css';
-import InfoWindowBlob from '../components/marker';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+// import Form from 'react-bootstrap/Form';
+// import './css/main.css';
+// import axios from 'axios';
+// import jwtDecode from 'jwt-decode';
+// import FormData from 'form-data';
  
 
 const MapContainer = (props)=>{
@@ -11,6 +20,8 @@ const MapContainer = (props)=>{
       height: '600px',    
   }
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState("");
+  // const [uploadedPupImage, setUploadedPupImage] = useState("");
 
   const [internalState, setInternalState] = useState(props);
   const previousValueRef = useRef();
@@ -20,38 +31,82 @@ const MapContainer = (props)=>{
   }
   useEffect(() => {
     previousValueRef.current = props;
-  })
+  });
 
   // value={internalState}
   // onChange={e => setInternalState(e.currentTarget.value)}
 
+//   useEffect(() => {
+//     const listener = e => {
+//        if (e.key === "Escape") {
+//           setShowingInfoWindow(false);
+//        }
+//     };
+//     window.addEventListener("keydown", listener);
+//     return () => {
+//        window.removeEventListener("keydown", listener);
+//     };
+//  }, []);
+
+
+const onMapClick = useCallback(() => {
+  setShowingInfoWindow(false);
+}, []);
+
+const onClick = useCallback(() => {
+  setShowingInfoWindow(false);
+}, []);
+
+useEffect(() => {
+  onMapClick();
+  setShowingInfoWindow(false);
+  setUploadedImage(internalState);
+}, [onMapClick]);
 
   const onMarkerClick = (marker) => {
     setInternalState(marker, showingInfoWindow)
     setShowingInfoWindow(true);
   };
 
-  const onMapClick = () => {
-    setShowingInfoWindow(false);
-    console.log("state",internalState)
-  };
-
   const loadInfoWindow = (marker, showingInfoWindow) => {
       console.log("passed marker",marker);
       let mapInfo = {lat: marker.position.lat, lng: marker.position.lng}
+      if(showingInfoWindow){
         return(
           <InfoWindow
             visible={showingInfoWindow}
             position={mapInfo}
-            className={"infoWindow"}
           >   
-            <div className="infoWindow">
-                        <h3>Name: {marker.name}</h3>
-                        <h5>Atmosphere: {marker.boardingAtmosphere}</h5>
-                        <h5>Boarding: {marker.boardingDescription}</h5>
-            </div>
+              <Container className="infoWindow">
+                <Row>
+                  <Col>
+                    <ProfileImage  url={marker.ownerImg}/>
+                  </Col>
+                  <Col>
+                  <Row>
+                    <Col className="infoWindowCol">
+                      <p>{marker.name}</p>
+                      <p>{marker.boardingAtmosphere}</p>
+                      <p>{marker.boardingDescription}</p>
+                    </Col>
+                    <Col>
+                    </Col>
+                  </Row>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <MessageForm />
+                  </Col>
+                </Row>
+              </Container>
           </InfoWindow>
         )
+      }
+      else{
+        <>
+        </>
+      }        
   }
 
     return (
@@ -63,7 +118,7 @@ const MapContainer = (props)=>{
             lat: props.geoAddress[0],
             lng: props.geoAddress[1]
             }}
-          onClick={onMapClick}
+          onMapClick={onMapClick}
           > 
           {props.markerPack.map(marker => {
             return(
@@ -73,8 +128,9 @@ const MapContainer = (props)=>{
                   position={ {lat: marker.geoAddress[0], lng: marker.geoAddress[1]} }
                   boardingAtmosphere={marker.boardingAtmosphere}
                   boardingDescription={marker.boardingDescription}
-                  onClick={onMarkerClick}
-                  
+                  ownerImg={marker.ownerImg}
+                  onClick={onMarkerClick} 
+                  onMapClick={onMapClick}                                  
                 >
                 </Marker>
             )})}

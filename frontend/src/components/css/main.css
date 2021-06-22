@@ -94,9 +94,17 @@
 }
 .infoWindow{
     width: 500px;
-    height: 300px;
     border-style: solid;
     border-color: #563059;
-    font: 20px;
-
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    font-size: 25px;
+    color: #563059;
+}
+.infoWindowCol{
+    width: 50px;
+}
+.formMessage{
+    height: 100px;
 }
