@@ -51,10 +51,10 @@ function Navigation() {
                 <Button className="navItem" onClick={goHome}>Home
                 </Button>
 
-                <Button className="navItem" onClick={goProfile}>Profile
+                <Button className="navItem" onClick={goPlayPen}>Play Pen
                 </Button>
 
-                <Button className="navItem" onClick={goPlayPen}>Play Pen
+                <Button className="navItem" onClick={goProfile}>Profile
                 </Button>
 
                 <Button className="navItem" onClick={goAccount}>Account

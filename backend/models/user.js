@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     pupList: { type: [String]},
     pendingPups: {type: [String]},
     pup: { type: Pup },
+    number: {type: String},
     address: {type: String},
     boardingAtmosphere: {type: String},
     boardingDescription: {type: String},

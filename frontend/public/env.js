@@ -181,6 +181,7 @@ window.env = {
   "npm_package_dependencies_react_hook_form": "^7.8.4",
   "npm_package_dependencies_react_router_dom": "^5.2.0",
   "npm_package_dependencies_react_scripts": "4.0.3",
+  "npm_package_dependencies_twilio": "^3.64.0",
   "npm_package_dependencies_web_vitals": "^1.1.2",
   "npm_package_dependencies__testing_library_jest_dom": "^5.14.1",
   "npm_package_dependencies__testing_library_react": "^11.2.7",

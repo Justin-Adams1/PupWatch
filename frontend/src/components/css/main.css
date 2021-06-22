@@ -61,11 +61,14 @@
     padding-top: 5px;
     font-size: 14px;
     color: #563059;
+    background-color: #fef3ff;
 }
 .pupProfileStyle{
     justify-content: center;
+    background-color: #fef3ff;
     border-style: solid;
     border-color: #563059;
+    color: #563059;
     border-width: 10px;
     border-radius: 20px;
     margin: 2%;
@@ -76,6 +79,7 @@
 }
 .profileStyle2{
     justify-content: center;
+    background-color: #fef3ff;
     border-style: solid;
     border-color: #563059;
     border-width: 10px;
@@ -87,13 +91,13 @@
     padding-top: 20px;
     font-size: 25px;
     color: #563059;
-    background-color: white;
 }
 .ownerImg{
     padding-bottom: 5px;
 }
 .infoWindow{
-    width: 500px;
+    width: auto;
+    height: auto;
     border-style: solid;
     border-color: #563059;
     border-radius: 10px;
@@ -101,10 +105,34 @@
     padding: 10px;
     font-size: 25px;
     color: #563059;
+    background-color: #fef3ff;
 }
 .infoWindowCol{
-    width: 50px;
+    border-style: solid;
+    border-color: #563059;
+    border-radius: 10px;
+    border-width: 2px;
+    width: 400px;
 }
 .formMessage{
     height: 100px;
+}
+.infoWindowText{
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: #563059;
+    padding: 2px;
+    width: 200px;
+    background-color: white;
+}
+.infoWindowTextBottom{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #563059;
+    border-radius: 10px;
+    padding: 2px;
+    width: 200px;
+    height: auto;
+    background-color: white;
 }

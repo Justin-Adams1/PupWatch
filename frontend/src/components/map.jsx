@@ -7,16 +7,25 @@ import './css/main.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-// import Form from 'react-bootstrap/Form';
-// import './css/main.css';
-// import axios from 'axios';
-// import jwtDecode from 'jwt-decode';
-// import FormData from 'form-data';
+import twilio from 'twilio';
+
+const accountSid = config.TWILIO_ACCOUNT_SID;
+const authToken = config.TWILIO_AUTH_TOKEN;
+
+// require the Twilio module and create a REST client
+
+// client.messages
+//   .create({
+//     to: '+15558675310',
+//     from: '+15017122661',
+//     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+//   })
+//   .then(message => console.log(message.sid));
  
 
 const MapContainer = (props)=>{
   const style = {
-      width: '950px',
+      width: '1050px',
       height: '600px',    
   }
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
@@ -47,14 +56,25 @@ const MapContainer = (props)=>{
 //        window.removeEventListener("keydown", listener);
 //     };
 //  }, []);
+useEffect(() => {
+  window.addEventListener("mouseup", props.onEvent);
 
+  return () => window.removeEventListener("mouseup", props.onEvent);
+}, [props.onEvent]);
 
 const onMapClick = useCallback(() => {
   setShowingInfoWindow(false);
 }, []);
 
 const onClick = useCallback(() => {
-  setShowingInfoWindow(false);
+  const client = require('twilio')(accountSid, authToken);
+  client.messages
+  .create({
+    to: '+15558675310',
+    from: '+15017122661',
+    body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+  })
+  .then(message => console.log(message.sid));
 }, []);
 
 useEffect(() => {
@@ -84,10 +104,10 @@ useEffect(() => {
                   </Col>
                   <Col>
                   <Row>
-                    <Col className="infoWindowCol">
+                    <Col>
                       <p>{marker.name}</p>
-                      <p>{marker.boardingAtmosphere}</p>
-                      <p>{marker.boardingDescription}</p>
+                      <p className="infoWindowText">{marker.boardingAtmosphere}</p>
+                      <p className="infoWindowTextBottom">{marker.boardingDescription}</p>
                     </Col>
                     <Col>
                     </Col>
@@ -96,7 +116,7 @@ useEffect(() => {
                 </Row>
                 <Row>
                   <Col>
-                    <MessageForm />
+                    <MessageForm props={internalState}/>
                   </Col>
                 </Row>
               </Container>
@@ -104,8 +124,11 @@ useEffect(() => {
         )
       }
       else{
+        return(
         <>
         </>
+
+        )
       }        
   }
 
@@ -129,6 +152,7 @@ useEffect(() => {
                   boardingAtmosphere={marker.boardingAtmosphere}
                   boardingDescription={marker.boardingDescription}
                   ownerImg={marker.ownerImg}
+                  number={marker.number}
                   onClick={onMarkerClick} 
                   onMapClick={onMapClick}                                  
                 >

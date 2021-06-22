@@ -308,8 +308,8 @@ return(
                 {user.pup.pupImg ?
                   <Row className="pupProfileStyle">
                     <Col>
-                    <Row className="popImgCol">
-                      <Col className="pupImgCol">
+                    <Row>
+                      <Col>
                       <h1> {pupName}  </h1>      
                           <PupImage  url={uploadedPupImage}/>            
                       </Col>        
@@ -321,7 +321,7 @@ return(
                           </form>  
                     </Row>
                     </Col>                  
-                    <Col className="pupDataCol">                                         
+                    <Col>                                         
                       <Form onSubmit={(event)=>addPup(event)}>
 
                         <Form.Group>

@@ -292,6 +292,7 @@ router.get('/populateAddress', auth, async (req, res) => {
                 boardingDescription: 1, 
                 ownerImg: 1,
                 pup: 1,
+                number: 1,
             })
             console.log(user);
             return res.send(user);

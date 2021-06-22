@@ -1,29 +1,34 @@
-import Container from 'react-bootstrap/Container';
+    import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
+import config from '../config.json';
+import { React, useState,  useEffect, useCallback} from 'react';
 import axios from 'axios';
+import twilio from 'twilio';
 
 const MessageForm = (props)=>{
 
-    console.log("messageFormLoad", props);
+    const accountSid = config.TWILIO_ACCOUNT_SID;
+    const authToken = config.TWILIO_AUTH_TOKEN;
+    const twilNumber = config.TWILIO_NUMBER;
+    
+    useEffect((props) => {
 
-    const handleClick = (event) => {
-        event.preventDefault();
-        console.log("Submit")
+        setNumber(props.props.number);
+        console.log("messageFormNumberset",props);
 
-      
-        // Geocode.setApiKey(apiKey);
-      
-        // Geocode.fromAddress("address").then(
-        //   (response) => {
-        //     const { lat, lng } = response.results[0].geometry.location;
-        //     console.log(lat, lng);
-        //   },
-        //   (error) => {
-        //     console.error(error);
-        //   }
-        // );
+        const accountSid = config.TWILIO_ACCOUNT_SID;
+        const authToken = config.TWILIO_AUTH_TOKEN;
+        const twilNumber = config.TWILIO_NUMBER;
+
+      }, []);
+
+    const [number, setNumber] = useState()
+
+    // const handleClick = (event) => {
+    //     event.preventDefault();
+    //     console.log("Submit")
 
         // axios
         //     .post(`http://localhost:5000/api/auth/`, {})
@@ -33,26 +38,33 @@ const MessageForm = (props)=>{
         //     .catch(error => {
         //         console.log('Error', error);
         //         })
-    }
+    // }
+
+    const onClick = (user) => {
+        var twilio = require('twilio');
+        var client = new twilio(accountSid, authToken);
+        client.messages
+        .create({
+          to: "+"+user.number,
+          from: twilNumber,
+          body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+        })
+        .then(message => console.log(message.sid));
+      };
 
 
     return(
         <Container>
             <Row>
                 <Col>
-                    <Form  onSubmit={(event)=>handleClick(event)}>
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label >Send me a message!</Form.Label>
-                            <Form.Control className="formMessage" type="textarea" placeholder="Hey! I'm interested in arranging a boarding session (etc)" />
-                          <button className="navItem" type="submit">
-                            Send
+                          <button   className="navItem"  
+                                    type="textarea"  
+                                    onClick={onClick(props)}
+                                    placeholder="Hey! I'm interested in arranging a boarding session (etc)">
+                            Send me a message!
                           </button>
-                        </Form.Group>                            
-                        </Form>
-                        <h6>I'll text you back as soon as possible. Thank you!</h6>
                 </Col>
             </Row>
-
         </Container>
     )
 }
