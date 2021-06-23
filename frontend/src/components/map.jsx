@@ -7,20 +7,6 @@ import './css/main.css';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import twilio from 'twilio';
-
-const accountSid = config.TWILIO_ACCOUNT_SID;
-const authToken = config.TWILIO_AUTH_TOKEN;
-
-// require the Twilio module and create a REST client
-
-// client.messages
-//   .create({
-//     to: '+15558675310',
-//     from: '+15017122661',
-//     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-//   })
-//   .then(message => console.log(message.sid));
  
 
 const MapContainer = (props)=>{
@@ -31,6 +17,7 @@ const MapContainer = (props)=>{
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [uploadedImage, setUploadedImage] = useState("");
   // const [uploadedPupImage, setUploadedPupImage] = useState("");
+  const [refresh, setRefresh] = useState("");
 
   const [internalState, setInternalState] = useState(props);
   const previousValueRef = useRef();
@@ -40,53 +27,24 @@ const MapContainer = (props)=>{
   }
   useEffect(() => {
     previousValueRef.current = props;
-  });
-
-  // value={internalState}
-  // onChange={e => setInternalState(e.currentTarget.value)}
-
-//   useEffect(() => {
-//     const listener = e => {
-//        if (e.key === "Escape") {
-//           setShowingInfoWindow(false);
-//        }
-//     };
-//     window.addEventListener("keydown", listener);
-//     return () => {
-//        window.removeEventListener("keydown", listener);
-//     };
-//  }, []);
-useEffect(() => {
-  window.addEventListener("mouseup", props.onEvent);
-
-  return () => window.removeEventListener("mouseup", props.onEvent);
-}, [props.onEvent]);
+    setRefresh(false);
+  }, [refresh, props, showingInfoWindow]);
 
 const onMapClick = useCallback(() => {
   setShowingInfoWindow(false);
-}, []);
-
-const onClick = useCallback(() => {
-  const client = require('twilio')(accountSid, authToken);
-  client.messages
-  .create({
-    to: '+15558675310',
-    from: '+15017122661',
-    body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-  })
-  .then(message => console.log(message.sid));
-}, []);
-
-useEffect(() => {
-  onMapClick();
-  setShowingInfoWindow(false);
-  setUploadedImage(internalState);
-}, [onMapClick]);
+  setInternalState(null);
+}, [props]);
 
   const onMarkerClick = (marker) => {
     setInternalState(marker, showingInfoWindow)
     setShowingInfoWindow(true);
   };
+
+      
+const goPublicProfile = (event) => {
+  console.log("gopub")
+  window.location = '/publicprofile';
+};
 
   const loadInfoWindow = (marker, showingInfoWindow) => {
       console.log("passed marker",marker);
@@ -95,7 +53,9 @@ useEffect(() => {
         return(
           <InfoWindow
             visible={showingInfoWindow}
+            name="infowWindow"
             position={mapInfo}
+            onMouseOut={onMapClick}
           >   
               <Container className="infoWindow">
                 <Row>
@@ -106,17 +66,17 @@ useEffect(() => {
                   <Row>
                     <Col>
                       <p>{marker.name}</p>
-                      <p className="infoWindowText">{marker.boardingAtmosphere}</p>
                       <p className="infoWindowTextBottom">{marker.boardingDescription}</p>
+                        <button className="messageItem"  
+                                type="textarea"  
+                                onClick={(event)=>goPublicProfile(event)}
+                                placeholder="Hey! I'm interested in arranging a boarding session (etc)">
+                                My Profile
+                        </button>
                     </Col>
                     <Col>
                     </Col>
                   </Row>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <MessageForm props={internalState}/>
                   </Col>
                 </Row>
               </Container>
@@ -137,11 +97,12 @@ useEffect(() => {
           <Map google={props.google} 
           zoom={18} 
           containerStyle={style}
+          shouldFocus={true}
           initialCenter={{
             lat: props.geoAddress[0],
             lng: props.geoAddress[1]
             }}
-          onMapClick={onMapClick}
+          onClick={onMapClick}
           > 
           {props.markerPack.map(marker => {
             return(
@@ -153,8 +114,7 @@ useEffect(() => {
                   boardingDescription={marker.boardingDescription}
                   ownerImg={marker.ownerImg}
                   number={marker.number}
-                  onClick={onMarkerClick} 
-                  onMapClick={onMapClick}                                  
+                  onClick={onMarkerClick}                          
                 >
                 </Marker>
             )})}

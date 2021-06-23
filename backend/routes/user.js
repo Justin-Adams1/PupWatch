@@ -6,6 +6,25 @@
  const router = express.Router();
  const multer = require('multer');
  const auth = require('../middleware/auth');
+ const twilio = require('twilio');
+ const config = require('config')
+
+ const accountSid = config.TWILIO_ACCOUNT_SID;
+ const authToken = config.TWILIO_AUTH_TOKEN;
+ const twilNumber = config.TWILIO_NUMBER;
+
+//  const onClick = (user) => {
+//      var twilio = require('twilio');
+//      var client = new twilio(accountSid, authToken);
+//      client.messages
+//      .create({
+//        to: "+"+user.number,
+//        from: twilNumber,
+//        body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+//      })
+//      .then(message => console.log(message.sid));
+//    };
+
 
  const storage = multer.diskStorage({
      destination: function (req, file, cb) {

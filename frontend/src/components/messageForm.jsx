@@ -1,28 +1,30 @@
-    import Container from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import config from '../config.json';
-import { React, useState,  useEffect, useCallback} from 'react';
+import { React, useState,  useEffect, useRef} from 'react';
 import axios from 'axios';
-import twilio from 'twilio';
+import './css/main.css';
 
 const MessageForm = (props)=>{
-
-    const accountSid = config.TWILIO_ACCOUNT_SID;
-    const authToken = config.TWILIO_AUTH_TOKEN;
-    const twilNumber = config.TWILIO_NUMBER;
     
     useEffect((props) => {
 
         setNumber(props.props.number);
-        console.log("messageFormNumberset",props);
-
-        const accountSid = config.TWILIO_ACCOUNT_SID;
-        const authToken = config.TWILIO_AUTH_TOKEN;
-        const twilNumber = config.TWILIO_NUMBER;
+        console.log("messageformProps",props);
 
       }, []);
+      
+    const [internalState, setInternalState] = useState(props);
+    const previousValueRef = useRef();
+    const previousValue=previousValueRef.current;
+    if(props !== previousValue && props !== internalState) {
+        setInternalState(props);
+    }
+    useEffect(() => {
+        previousValueRef.current = props;
+    });
 
     const [number, setNumber] = useState()
 
@@ -40,32 +42,34 @@ const MessageForm = (props)=>{
         //         })
     // }
 
-    const onClick = (user) => {
-        var twilio = require('twilio');
-        var client = new twilio(accountSid, authToken);
-        client.messages
-        .create({
-          to: "+"+user.number,
-          from: twilNumber,
-          body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-        })
-        .then(message => console.log(message.sid));
-      };
+    
+const goPublicProfile = () => {
+    console.log("gopub")
+    window.location = '/publicprofile';
+};
+useEffect(() => {
+    const listener = e => {
+       if (e === "click") {
+        window.location = '/publicprofile';
+       }
+    };
+    window.addEventListener("click", listener);
+    return () => {
+       window.removeEventListener("click", listener);
+    };
+ }, 
+ []);
 
 
     return(
-        <Container>
-            <Row>
-                <Col>
-                          <button   className="navItem"  
-                                    type="textarea"  
-                                    onClick={onClick(props)}
-                                    placeholder="Hey! I'm interested in arranging a boarding session (etc)">
-                            Send me a message!
-                          </button>
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <button className="messageItem"  
+                    type="textarea"  
+                    onClick={() => goPublicProfile()}
+                    placeholder="Hey! I'm interested in arranging a boarding session (etc)">
+            My Profile
+            </button>
+        </>
     )
 }
 

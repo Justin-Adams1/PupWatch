@@ -136,3 +136,25 @@
     height: auto;
     background-color: white;
 }
+.navItem{
+    margin: 10px;
+    border-color: #563059;
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 50px;
+    font-size: 45px;
+    color: #563059;
+    background-color: white;
+}
+.messageItem{
+    margin: 10px;
+    width: 280px;
+    height: fit-content;
+    border-color: #563059;
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 50px;
+    font-size: 25px;
+    color: #563059;
+    background-color: white;
+}
