@@ -115,3 +115,76 @@
     border-color: #563059;
     color: white;
 }
+.messageForm{
+    justify-content: center;
+    border-style: solid;
+    border-color: #563059;
+    border-width: 10px;
+    border-radius: 20px;
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 3%;
+    margin-bottom: 5%;
+    padding-bottom: 5%;
+    width:800px;
+    height: 800px;
+    padding-top: 5px;
+}
+.navItemSmall3{
+    margin: 10px;
+    width: auto;
+    border-color: #563059;
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 50px;
+    font-size: 45px;
+    color: #563059;
+    background-color: white;
+}
+.navItemSmall3:active{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall3:hover{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall3:target{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall3:focus{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+
+
+.modalStyle{
+    justify-content: center;
+    border-style: solid;
+    border-color: #563059;
+    border-width: 10px;
+    border-radius: 20px;
+    position:absolute;
+    width: 600px;
+    height: auto;
+    padding-top: 5px;
+    font-size: 40px;
+    color: #563059;
+    background-color: #fef3ff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -300px;
+    margin-left: -400px;
+}
+.modalText1{
+    height: 50px;
+}
+.modalText2{
+    height: 150px;
+}

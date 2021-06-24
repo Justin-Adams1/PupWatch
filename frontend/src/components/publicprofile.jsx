@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import Container from 'react-bootstrap/Container';
+import config from '../config.json'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import './css/main.css';
 import axios from 'axios';
@@ -12,6 +14,7 @@ import '../components/css/navigation.css';
 import ProfileImage from './profileImage';
 import PupImage from './pupimg';
 
+
 const Profile = (props)=>{
     
     const jwt = localStorage.getItem('token');
@@ -20,13 +23,11 @@ const Profile = (props)=>{
     const [uploadedImage, setUploadedImage] = useState("");
     const [uploadedPupImage, setUploadedPupImage] = useState("");
     const userId = useRef("");
-
     const [ pupName, setPupName] = useState('');
     const [ pupAboutMe, setPupAboutMe] = useState('');
     const [ pupLikes, setPupLikes] = useState('');
     const [ pupDislikes, setPupDislikes] = useState('');
-    const [ pupAllergy, setPupAllergy] = useState('');
-    
+    const [ pupAllergy, setPupAllergy] = useState('');    
     const [ boardingAtmosphere, setBoardingAtmosphere] = useState("");
     const [ boardingDescription, setBoardingDescription] = useState("");
 
@@ -58,6 +59,12 @@ const Profile = (props)=>{
       console.log(userObject)
     }
 
+    const [number, setNumber] = useState(false);
+    const [message, setMessage] = useState(false);
+    const [show, setShow] = useState(false);
+
+
+
 
 return(
         <>
@@ -68,6 +75,35 @@ return(
                   <Row>
                     <h1> {user.name} </h1>
                     <ProfileImage  url={uploadedImage}/>
+                  </Row>
+                  <Row>
+                    <Button className="navItemSmall3" onClick={(()=>setShow(true))}>Send me a message!</Button>
+                    <Modal
+                      show={show}
+                      className={"modalStyle"}
+                      onHide={() => setShow(false)}
+                    >
+                      <Modal.Header 
+                      closeButton={false}>
+                        <Modal.Title>Send me a SMS</Modal.Title>
+                          </Modal.Header>
+                      <Modal.Body>
+
+                      <Form >
+                        <Form.Group>
+                            <Form.Label>Contact Phone Number:</Form.Label>
+                            <Form.Control className="modalText1" as="textarea" defaultValue={"555-555-5555"} onChange={setNumber}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Message:</Form.Label>
+                            <Form.Control className="modalText2" as="textarea" defaultValue={"Hey! I'm interested in boarding my pup this weekend! Let me know what you have available"} onChange={setMessage}/>
+                        </Form.Group>
+                        </Form>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button className="navItem">Send!</Button>
+                      </Modal.Footer>
+                    </Modal>
                   </Row>
                 </Col>
                 <Col className="profileStyle2">

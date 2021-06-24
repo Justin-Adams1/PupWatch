@@ -92,60 +92,6 @@ const Profile = (props)=>{
       }
   }
 
-//   const changeOwner = (event) => {
-//     event.preventDefault();
-
-//     console.log("user", user);
-//     console.log("pup", pupName)
-
-//     try{
-//     axios
-//         .put(`http://localhost:5000/api/user/${userObject._id}/changeall`,
-//         {
-//           pupName: pupName,
-//           pupAboutMe: pupAboutMe,
-//           pupLikes: pupLikes,
-//           pupDislikes: pupDislikes,
-//           pupAllergyInfo: pupAllergy,
-//           pupImg: user.pup.pupImg,
-
-//           name: user.name,
-//           email: user.email,
-//           aboutMe: user.aboutMe,
-//           ownerImg: user.ownerImg,
-//           boardingAtmosphere: boardingAtmosphere,
-//           boardingDescription: boardingDescription,
-//           pupList: user.pupList,
-//           pendingPups: user.pendingPups,
-//           address: user.address,
-//           boardingPicture1: user.boardingPicture1,
-//           boardingPicture2: user.boardingPicture2,
-//           geoAddress: user.geoAddress,
-//         }, 
-//         {headers: {"x-auth-token": jwt}}
-//         )
-//         .then(response => {
-//             console.log(response);
-//             window.location = '/profile';
-//         });
-//     }catch(error){
-//       console.log(error);
-//     }
-// }
-// const handleClick = (event) => {
-//   event.preventDefault();
-//   console.log("changing info out", user.id);
-//   axios
-//       .put(`http://localhost:5000/api/user/${userObject._id}/updateAccount`, {
-//         boardingAtmosphere: boardingAtmosphere,
-//         boardingDescription: boardingDescription,
-//       },{headers: {"x-auth-token": jwt}})
-//       .then(response => {
-//           console.log(response);
-//           window.location = '/account';
-//       });
-// }
-
 
     const submitBoardingInfo = (event) => {
         event.preventDefault();
