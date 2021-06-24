@@ -1,13 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Form from 'react-bootstrap/Form';
-import config from '../config.json';
 import { React, useState,  useEffect, useRef} from 'react';
 import axios from 'axios';
 import './css/main.css';
+import ProfileImage from './infoWindowPic';
 
-const MessageForm = (props)=>{
+const InfoWindow = (props)=>{
     
     useEffect((props) => {
 
@@ -62,15 +61,33 @@ useEffect(() => {
 
 
     return(
-        <>
-            <button className="messageItem"  
-                    type="textarea"  
-                    onClick={() => goPublicProfile()}
-                    placeholder="Hey! I'm interested in arranging a boarding session (etc)">
-            My Profile
-            </button>
-        </>
+        <div>              
+              <Container className="infoWindow">
+                <Row>
+                  <Col>
+                    <ProfileImage  url={props.marker.ownerImg}/>
+                  </Col>
+                  <Col>
+                  <Row>
+                    <Col>
+                      <p>{props.marker.name}</p>
+                      <p className="infoWindowTextBottom">{props.marker.boardingDescription}</p>
+                        <button className="messageItem"  
+                                type="textarea"  
+                                onClick={(event)=>goPublicProfile(event)}
+                                placeholder="Hey! I'm interested in arranging a boarding session (etc)"
+                        >
+                                My Profile
+                        </button>
+                    </Col>
+                    <Col>
+                    </Col>
+                  </Row>
+                  </Col>
+                </Row>
+              </Container>
+        </div>
     )
 }
 
-export default MessageForm;
+export default InfoWindow;

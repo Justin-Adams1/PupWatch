@@ -30,9 +30,15 @@ const Profile = (props)=>{
     const [ boardingAtmosphere, setBoardingAtmosphere] = useState("");
     const [ boardingDescription, setBoardingDescription] = useState("");
 
+    useEffect(() => {   
+      const pubProfile  = localStorage.getItem('pubProfile');
+      authUser(pubProfile, jwt);
+      userId.current = userObject;
+    },[]);
+
     const authUser = async (userObject, jwt)=>{
       try{
-        const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
+        const user = await axios.get(`http://localhost:5000/api/user/${userObject}`, {headers: {"x-auth-token": jwt}});
 
         setUser(user.data);  
         setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
@@ -43,19 +49,14 @@ const Profile = (props)=>{
         setPupLikes(user.data.pup.likes);
         setPupDislikes(user.data.pup.dislikes);
         setPupAllergy(user.data.pup.allergyInfo);
+        setBoardingAtmosphere(user.data.boardingAtmosphere);
+        setBoardingDescription(user.data.boardingDescription);
         console.log("received user:", user);
       }catch(error){
         console.log(error);
       }
+      console.log(userObject)
     }
-
-    useEffect(() => {
-        const jwt = localStorage.getItem('token');
-        const userObject = jwtDecode(jwt);
-        authUser(userObject, jwt);
-        userId.current = userObject;
-        console.log("Profile Page Load")
-    },[]);
 
 
 return(
@@ -134,10 +135,10 @@ return(
                   </Row>
               }
             </Container>
-          :
-          <>
-          </>
-        }
+            :
+            <>
+            </>        
+      }
         </>
     )
   }

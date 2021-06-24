@@ -1,12 +1,12 @@
 import { React } from 'react';
 import './css/marker.css';
 
-const Marker = (props) => {
+const InfoWindow = (props) => {
 
   console.log("info window props", props.marker);
 
     return (
-      <Marker
+      <InfoWindow
         position={{lat: 38.0202145, lng: -85.6470396}}
         visible={true}
       >   
@@ -16,8 +16,8 @@ const Marker = (props) => {
                     <h5>Atmosphere: </h5>
                     <h5>Boarding: </h5>
         </div>
-      </Marker>
+      </InfoWindow>
     );
   };
 
-  export default Marker;
+  export default InfoWindow;

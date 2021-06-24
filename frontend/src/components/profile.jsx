@@ -167,6 +167,7 @@ const Profile = (props)=>{
     const authUser = async (userObject, jwt)=>{
       try{
         const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
+        console.log("userObject", userObject)
 
         setUser(user.data);  
         setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
@@ -190,7 +191,6 @@ const Profile = (props)=>{
         const userObject = jwtDecode(jwt);
         authUser(userObject, jwt);
         userId.current = userObject;
-        console.log("Profile Page Load")
         
     },[setIsSelected, setUploadedPupImage, setBoardingAtmosphere, setBoardingDescription, setPupName, setPupLikes, setPupDislikes, setPupAllergy]);
 
