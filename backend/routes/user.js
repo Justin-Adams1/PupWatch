@@ -337,6 +337,23 @@ router.get('/:id', auth, async (req, res) => {
     }
 }); 
 
+//patch friend request
+router.patch('/friendrequest', async (req, res) => {
+    console.log("addfriend", req.body.to);
+
+    try{
+        const user = await User.findByIdAndUpdate(
+            req.body.to, 
+            {
+                pendingPups: req.body.pupFriend
+            })
+            console.log(user);
+            return res.send(user);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+}); 
+
 
 
 module.exports = router;

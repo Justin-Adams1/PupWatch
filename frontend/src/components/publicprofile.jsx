@@ -34,6 +34,7 @@ const Profile = (props)=>{
     useEffect(() => {
       const pubProfile  = localStorage.getItem('pubProfile');
       const jwt = localStorage.getItem('token');
+      const from  = localStorage.getItem('from');
       authPub(pubProfile, jwt);
       const userObject = jwtDecode(jwt);
     },[]);    
@@ -43,7 +44,7 @@ const Profile = (props)=>{
 
         console.log("pubuser",pubUser)
 
-        setUser(pubUser.data);  
+        setPubUser(pubUser.data);  
         setUploadedImage("http://localhost:5000/" + pubUser.data.ownerImg);
         setUploadedPupImage("http://localhost:5000/" + pubUser.data.pup.pupImg);
         console.log("pup", pubUser.data.pup);
@@ -55,6 +56,30 @@ const Profile = (props)=>{
         setBoardingAtmosphere(pubUser.data.boardingAtmosphere);
         setBoardingDescription(pubUser.data.boardingDescription);
         console.log("received user:", pubUser);
+
+        try{
+          const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
+          console.log("userObject", userObject)       
+  
+          setUser(user.data);  
+          const from = localStorage.setItem('from', user.data.number);
+          const authUser = localStorage.setItem('authUser', user.data._id);
+          console.log("from", from)
+  
+          setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
+          setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
+          console.log("pup", user.data.pup);
+          setPupAboutMe(user.data.pup.aboutMe);
+          setPupName(user.data.pup.name);
+          setPupLikes(user.data.pup.likes);
+          setPupDislikes(user.data.pup.dislikes);
+          setPupAllergy(user.data.pup.allergyInfo);
+          setBoardingAtmosphere(user.data.boardingAtmosphere);
+          setBoardingDescription(user.data.boardingDescription);
+          console.log("received user:", user);
+        }catch(error){
+          console.log(error);
+        }
       }catch(error){
         console.log(error);
       }
@@ -73,8 +98,6 @@ const Profile = (props)=>{
     const handleClick = async (event) => {
         console.log("message", message)
         console.log("number", number)
-
-        const from  = localStorage.getItem('from');
         console.log("user", from)
 
         try{
@@ -92,6 +115,34 @@ const Profile = (props)=>{
         }
     }
 
+    const addFriend = async () => {
+      const authUser  = localStorage.getItem('authUser');
+
+      let newFriend = [];
+      newFriend.push(user.pup.name, user._id);
+      let newFriendList = [];
+      newFriendList.push(newFriend, user.pupList);
+
+      console.log("logged in user pup name", user.pupName);
+      console.log("logged in user id to serach by", user._id);
+      console.log("logged in user pup list", user.pupList);
+      console.log("new pending", newFriend);
+
+      try{
+        await axios
+          .patch(`http://localhost:5000/api/user/friendrequest`, {pupFriend: newFriendList, from: user._id, to: pubUser._id})
+          .then(response => {
+            console.log(response);
+            alert("Friend request sent!")
+          })
+          .catch(error => {
+              console.log('Error', error);
+          })
+      }catch(error){
+        console.log(error);
+      }
+    }   
+
 return(
         <>
         {user?
@@ -100,11 +151,11 @@ return(
                 <Col className="profileStyle">
                   <Row>
                     <h1> {user.name} </h1>
-                    <ProfileImage  url={uploadedImage}/>
+                    <ProfileImage url={uploadedImage}/>
                   </Row>
                   <Row>
                     <Button className="navItemSmall3" onClick={(()=>setShow(true))}>Send me a message!</Button>
-                    <Button className="navItemSmall3" onClick={(()=>setShow(true))}>Add as Friend?</Button>
+                    <Button className="navItemSmall3" onClick={addFriend}>Add as Friend?</Button>
                     <Modal
                       show={show}
                       className={"modalStyle"}

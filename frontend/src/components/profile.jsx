@@ -117,6 +117,7 @@ const Profile = (props)=>{
 
         setUser(user.data);  
         const from = localStorage.setItem('from', user.data.number);
+        const authUser = localStorage.setItem('authUser', user.data._id);
         console.log("from", from)
 
         setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
