@@ -68,6 +68,7 @@ router.post('/', async (req, res) => {
             password: await bcrypt.hash(req.body.password, salt),
             pupList: [""],
             pendingPups: [""],
+            number: [""],
             pup: {
                 pupImg: "",
                 name: "",
@@ -120,6 +121,7 @@ router.put('/:id/changeall/', auth, async (req, res) => {
                 boardingAtmosphere: req.body.boardingAtmosphere,
                 boardingDescription: req.body.boardingDescription,
                 pupList: req.body.pupList,
+                number: req.body.number,
                 pendingPups: req.body.pendingPups,
                 address: req.body.address,
                 boardingPicture1: req.body.boardingPicture1,
@@ -227,6 +229,7 @@ router.put("/uploadmulter/:id/pup", upload.single("pupImg"), async (req, res) =>
                 name: req.body.name, 
                 email: req.body.email, 
                 pupList: req.body.pupList,
+                number: req.body.number,
                 pendingPups: req.body.pendingPups,
                 aboutMe: req.body.aboutMe,
             },
@@ -252,6 +255,7 @@ router.put("/uploadmulter/:id/pup", upload.single("pupImg"), async (req, res) =>
          const user = await User.findByIdAndUpdate(
              req.params.id, {
                 name: req.body.name, 
+                number: req.body.number,
                 email: req.body.email, 
                 pupList: req.body.pupList,
                 pendingPups: req.body.pendingPups,

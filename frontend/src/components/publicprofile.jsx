@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import Container from 'react-bootstrap/Container';
-import config from '../config.json'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -30,41 +29,68 @@ const Profile = (props)=>{
     const [ pupAllergy, setPupAllergy] = useState('');    
     const [ boardingAtmosphere, setBoardingAtmosphere] = useState("");
     const [ boardingDescription, setBoardingDescription] = useState("");
+    const [ pubUser, setPubUser] = useState('');
 
-    useEffect(() => {   
+    useEffect(() => {
       const pubProfile  = localStorage.getItem('pubProfile');
-      authUser(pubProfile, jwt);
-      userId.current = userObject;
-    },[]);
-
-    const authUser = async (userObject, jwt)=>{
+      const jwt = localStorage.getItem('token');
+      authPub(pubProfile, jwt);
+      const userObject = jwtDecode(jwt);
+    },[]);    
+    const authPub = async (userObject, jwt)=>{
       try{
-        const user = await axios.get(`http://localhost:5000/api/user/${userObject}`, {headers: {"x-auth-token": jwt}});
+        const pubUser = await axios.get(`http://localhost:5000/api/user/${userObject}`, {headers: {"x-auth-token": jwt}});
 
-        setUser(user.data);  
-        setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
-        setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
-        console.log("pup", user.data.pup);
-        setPupAboutMe(user.data.pup.aboutMe);
-        setPupName(user.data.pup.name);
-        setPupLikes(user.data.pup.likes);
-        setPupDislikes(user.data.pup.dislikes);
-        setPupAllergy(user.data.pup.allergyInfo);
-        setBoardingAtmosphere(user.data.boardingAtmosphere);
-        setBoardingDescription(user.data.boardingDescription);
-        console.log("received user:", user);
+        console.log("pubuser",pubUser)
+
+        setUser(pubUser.data);  
+        setUploadedImage("http://localhost:5000/" + pubUser.data.ownerImg);
+        setUploadedPupImage("http://localhost:5000/" + pubUser.data.pup.pupImg);
+        console.log("pup", pubUser.data.pup);
+        setPupAboutMe(pubUser.data.pup.aboutMe);
+        setPupName(pubUser.data.pup.name);
+        setPupLikes(pubUser.data.pup.likes);
+        setPupDislikes(pubUser.data.pup.dislikes);
+        setPupAllergy(pubUser.data.pup.allergyInfo);
+        setBoardingAtmosphere(pubUser.data.boardingAtmosphere);
+        setBoardingDescription(pubUser.data.boardingDescription);
+        console.log("received user:", pubUser);
       }catch(error){
         console.log(error);
       }
-      console.log(userObject)
     }
 
     const [number, setNumber] = useState(false);
-    const [message, setMessage] = useState(false);
+    const [message, setMessage] = useState("");
+    const [from, setFrom] = useState("");
     const [show, setShow] = useState(false);
 
+    const messageChange = (event) => {
+        setMessage(event.target.value);
+        setNumber(user.number);
+    };
 
+    const handleClick = async (event) => {
+        console.log("message", message)
+        console.log("number", number)
 
+        const from  = localStorage.getItem('from');
+        console.log("user", from)
+
+        try{
+          await axios
+            .post(`http://localhost:5000/api/message/`, {to: number, body: message, from: from })
+            .then(response => {
+              console.log(response);
+              alert("Message Sent! Thank you")
+            })
+            .catch(error => {
+                console.log('Error', error);
+            })
+        }catch(error){
+          console.log(error);
+        }
+    }
 
 return(
         <>
@@ -78,30 +104,25 @@ return(
                   </Row>
                   <Row>
                     <Button className="navItemSmall3" onClick={(()=>setShow(true))}>Send me a message!</Button>
+                    <Button className="navItemSmall3" onClick={(()=>setShow(true))}>Add as Friend?</Button>
                     <Modal
                       show={show}
                       className={"modalStyle"}
                       onHide={() => setShow(false)}
                     >
-                      <Modal.Header 
-                      closeButton={false}>
-                        <Modal.Title>Send me a SMS</Modal.Title>
-                          </Modal.Header>
                       <Modal.Body>
+                      <Form>
+                        <Form.Group>
+                            <Form.Label>Send SMS:</Form.Label>
+                            <Form.Control className="modalText2" 
+                            as="textarea" 
+                            onChange={messageChange}/>
 
-                      <Form >
-                        <Form.Group>
-                            <Form.Label>Contact Phone Number:</Form.Label>
-                            <Form.Control className="modalText1" as="textarea" defaultValue={"555-555-5555"} onChange={setNumber}/>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Message:</Form.Label>
-                            <Form.Control className="modalText2" as="textarea" defaultValue={"Hey! I'm interested in boarding my pup this weekend! Let me know what you have available"} onChange={setMessage}/>
                         </Form.Group>
                         </Form>
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button className="navItem">Send!</Button>
+                        <Button className="navItem" onClick={handleClick}>Send!</Button>
                       </Modal.Footer>
                     </Modal>
                   </Row>

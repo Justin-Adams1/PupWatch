@@ -113,9 +113,12 @@ const Profile = (props)=>{
     const authUser = async (userObject, jwt)=>{
       try{
         const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
-        console.log("userObject", userObject)
+        console.log("userObject", userObject)       
 
         setUser(user.data);  
+        const from = localStorage.setItem('from', user.data.number);
+        console.log("from", from)
+
         setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
         setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
         console.log("pup", user.data.pup);

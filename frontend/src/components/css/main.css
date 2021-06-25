@@ -59,6 +59,7 @@
     width: 1400px;
     height: 590px;
     padding-top: 5px;
+    margin-bottom: 15px;
     font-size: 14px;
     color: #563059;
     background-color: #fef3ff;
@@ -93,7 +94,6 @@
     color: #563059;
 }
 .ownerImg{
-    padding-bottom: 5px;
 }
 .infoWindow{
     width: auto;
@@ -157,4 +157,36 @@
     font-size: 25px;
     color: #563059;
     background-color: white;
+}
+
+
+.navItemSmall{
+    margin: 10px;
+    border-color: #563059;
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 50px;
+    font-size: 25px;
+    color: #563059;
+    background-color: white;
+}
+.navItemSmall:active{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall:hover{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall:target{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.navItemSmall:focus{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
 }

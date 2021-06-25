@@ -36,6 +36,7 @@ function validateUser(user) {
         password: Joi.string().min(5).max(1024).required(),
         address: Joi.string().min(5).max(1024).required(),
         geoAddress: Joi.array().required(),
+        number: Joi.number().min(5).max(1024).required(),
     });
     return schema.validate(user);
 }
