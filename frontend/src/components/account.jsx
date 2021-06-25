@@ -155,7 +155,7 @@ return(
                           {console.log(pendingPups)}
                           <Form.Group>
                               <Form.Label>Pending Pup Friends</Form.Label>
-                              <Form.Control as="textarea" defaultValue={pendingPups} placeholder={pendingPups[0]} onChange={pendingPupsChange}/>
+                              <Form.Control as="textarea" defaultValue={pendingPups} placeholder={pendingPups} onChange={pendingPupsChange}/>
                           </Form.Group>
                           <Button className="navItemSmall" type="submit">Update My Info</Button>
                         </Form>

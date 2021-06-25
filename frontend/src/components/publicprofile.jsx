@@ -36,18 +36,18 @@ const Profile = (props)=>{
       const jwt = localStorage.getItem('token');
       const from  = localStorage.getItem('from');
       authPub(pubProfile, jwt);
-      const userObject = jwtDecode(jwt);
+      let userObject = jwtDecode(jwt);
     },[]);    
     const authPub = async (userObject, jwt)=>{
       try{
         const pubUser = await axios.get(`http://localhost:5000/api/user/${userObject}`, {headers: {"x-auth-token": jwt}});
 
         console.log("pubuser",pubUser)
+        console.log("pup", pubUser.data.pup);
 
         setPubUser(pubUser.data);  
         setUploadedImage("http://localhost:5000/" + pubUser.data.ownerImg);
         setUploadedPupImage("http://localhost:5000/" + pubUser.data.pup.pupImg);
-        console.log("pup", pubUser.data.pup);
         setPupAboutMe(pubUser.data.pup.aboutMe);
         setPupName(pubUser.data.pup.name);
         setPupLikes(pubUser.data.pup.likes);
@@ -58,24 +58,12 @@ const Profile = (props)=>{
         console.log("received user:", pubUser);
 
         try{
+          userObject = jwtDecode(jwt);
           const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
           console.log("userObject", userObject)       
   
           setUser(user.data);  
           const from = localStorage.setItem('from', user.data.number);
-          const authUser = localStorage.setItem('authUser', user.data._id);
-          console.log("from", from)
-  
-          setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
-          setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
-          console.log("pup", user.data.pup);
-          setPupAboutMe(user.data.pup.aboutMe);
-          setPupName(user.data.pup.name);
-          setPupLikes(user.data.pup.likes);
-          setPupDislikes(user.data.pup.dislikes);
-          setPupAllergy(user.data.pup.allergyInfo);
-          setBoardingAtmosphere(user.data.boardingAtmosphere);
-          setBoardingDescription(user.data.boardingDescription);
           console.log("received user:", user);
         }catch(error){
           console.log(error);
