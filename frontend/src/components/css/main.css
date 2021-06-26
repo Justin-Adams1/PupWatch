@@ -190,3 +190,45 @@
     border-color: #563059;
     color: white;
 }
+.pendingPup{
+    height: auto;
+    width: auto;
+    background-color: white;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: #563059;
+    margin-bottom: 10px;
+
+}.buttonXS{
+    margin: 10px;
+    border-color: #563059;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 50px;
+    font-size: 15px;
+    color: #563059;
+    background-color: white;
+}
+.buttonXS:active{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.buttonXS:hover{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.buttonXS:target{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.buttonXS:focus{
+    background-color: #563059;
+    border-color: #563059;
+    color: white;
+}
+.buttonXSGroup{
+    justify-content: right;
+}

@@ -339,13 +339,12 @@ router.get('/:id', auth, async (req, res) => {
 
 //patch friend request
 router.patch('/friendrequest', async (req, res) => {
-    console.log("addfriend", req.body.to);
-
+    console.log(req.body.pupfriend)
     try{
         const user = await User.findByIdAndUpdate(
-            req.body.to, 
+            req.body.toUser, 
             {
-                pendingPups: req.body.pupFriend
+                pendingPups: {...{name: req.body.pupFriend[0].name, _id: req.body.from}}
             })
             console.log(user);
             return res.send(user);
@@ -354,7 +353,58 @@ router.patch('/friendrequest', async (req, res) => {
     }
 }); 
 
+//delete friend request
+router.patch('/deleteRequest', async (req, res) => {
+    try{
+        const user = await User.findByIdAndUpdate(
+            req.body.id, 
+            {
+                pendingPups: {name: null, _id: null}
+            })
+            console.log(user);
+            return res.send(user);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+}); 
 
+//accept friend request for both people
+router.patch('/acceptRequest', async (req, res) => {
+    try{
+        const user = await User.findByIdAndUpdate(
+            req.body.id, 
+            {
+                pupList: {...{name: req.body.otherPup, _id: req.body.from}},
+                pendingPups: {name: null, _id: null}
+            })
+            
+            const otherUser = await User.findByIdAndUpdate(
+            req.body.otherId, 
+            {
+                pupList: {...{name: req.body.pupFriend[0].name, _id: req.body.pupFriend[0]._id}}
+            })
+            console.log("user",user);
+            console.log("otheruser",otherUser);
+            return res.send(user);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+}); 
+
+//delete current friend
+router.patch('/deleteFriend', async (req, res) => {
+    try{
+        const user = await User.findByIdAndUpdate(
+            req.body.pupFriend[0]._id, 
+            {
+                pupList: {name: null, _id: null}
+            })
+            console.log(user);
+            return res.send(user);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+}); 
 
 module.exports = router;
 

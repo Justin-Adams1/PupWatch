@@ -57,7 +57,7 @@ function Navigation() {
                 <Button className="navItem" onClick={goProfile}>Profile
                 </Button>
 
-                <Button className="navItem" onClick={goAccount}>Account
+                <Button className="navItem" onClick={goAccount}>Boarding
                 </Button>
                 </>
             }

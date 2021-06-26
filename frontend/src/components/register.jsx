@@ -95,6 +95,13 @@ const Register = (props)=>{
                     </Form.Group>
                   </Form>
                 </Row>
+                <Row>
+                  <p>
+                    By clicking "Sign Up",  you agree to PupWatch Terms of Use and Privacy Policy. 
+                    You consent to receive phone calls and SMS messages from PupCakes to provide updates to other users concerning boarding activity.  
+                    Reply with STOP at any time to cancel. Message and data rates may apply."
+                  </p>
+                </Row>
             </Table>
         </Container>
     )

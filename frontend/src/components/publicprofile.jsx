@@ -42,8 +42,8 @@ const Profile = (props)=>{
       try{
         const pubUser = await axios.get(`http://localhost:5000/api/user/${userObject}`, {headers: {"x-auth-token": jwt}});
 
-        console.log("pubuser",pubUser)
         console.log("pup", pubUser.data.pup);
+        console.log("received public user:", pubUser);
 
         setPubUser(pubUser.data);  
         setUploadedImage("http://localhost:5000/" + pubUser.data.ownerImg);
@@ -55,12 +55,10 @@ const Profile = (props)=>{
         setPupAllergy(pubUser.data.pup.allergyInfo);
         setBoardingAtmosphere(pubUser.data.boardingAtmosphere);
         setBoardingDescription(pubUser.data.boardingDescription);
-        console.log("received user:", pubUser);
 
         try{
           userObject = jwtDecode(jwt);
           const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
-          console.log("userObject", userObject)       
   
           setUser(user.data);  
           const from = localStorage.setItem('from', user.data.number);
@@ -107,18 +105,24 @@ const Profile = (props)=>{
       const authUser  = localStorage.getItem('authUser');
 
       let newFriend = [];
-      newFriend.push(user.pup.name, user._id);
-      let newFriendList = [];
-      newFriendList.push(newFriend, user.pupList);
+      let newFriendList = []; 
 
-      console.log("logged in user pup name", user.pupName);
-      console.log("logged in user id to serach by", user._id);
-      console.log("logged in user pup list", user.pupList);
-      console.log("new pending", newFriend);
+      if(user.pendingPupList === null){
+          newFriendList.push({name: user.pup.name}, {id: user._id});
+      }else{
+          newFriendList.push({name: user.pup.name}, {id: user._id}, {previous: user.pupList});       
+      }
+
+      console.log("Auth User Pup Name", user.pup.name);
+      console.log("new pending friend", newFriend);
+      console.log("To User:", pubUser.name)
+      console.log("newFriendList", newFriendList)
+      console.log("userpupList", user.pupList)
+      
 
       try{
         await axios
-          .patch(`http://localhost:5000/api/user/friendrequest`, {pupFriend: newFriendList, from: user._id, to: pubUser._id})
+          .patch(`http://localhost:5000/api/user/friendrequest`, {pupFriend: newFriendList, from: user._id, toUser: pubUser._id})
           .then(response => {
             console.log(response);
             alert("Friend request sent!")
@@ -138,7 +142,7 @@ return(
               <Row>
                 <Col className="profileStyle">
                   <Row>
-                    <h1> {user.name} </h1>
+                    <h1> {pubUser.name} </h1>
                     <ProfileImage url={uploadedImage}/>
                   </Row>
                   <Row>
@@ -172,12 +176,12 @@ return(
 
                           <Form.Group>
                               <Form.Label>Atmosphere</Form.Label>
-                              <Form.Control as="textarea" plaintext readonly defaultValue={user.boardingAtmosphere} placeholder={user.boardingAtmosphere}/>
+                              <Form.Control as="textarea" plaintext disable="true" defaultValue={pubUser.boardingAtmosphere} placeholder={pubUser.boardingAtmosphere}/>
                           </Form.Group>
 
                           <Form.Group>
                               <Form.Label>About My Boarding description:</Form.Label>
-                              <Form.Control rows={8} as="textarea" plaintext readonly defaultValue={user.boardingDescription} placeholder={user.boardingDescription}/>
+                              <Form.Control rows={8} as="textarea" plaintext disable="true" defaultValue={pubUser.boardingDescription} placeholder={pubUser.boardingDescription}/>
                           </Form.Group>
 
                         </Form>
@@ -199,27 +203,27 @@ return(
 
                         <Form.Group>
                             <Form.Label>Name</Form.Label>
-                            <Form.Control rows={1}  type="text"  plaintext readonly defaultValue={pupName} placeholder={pupName}/>
+                            <Form.Control rows={1}  type="text"  plaintext disabled="true" defaultValue={pupName} placeholder={pupName}/>
                         </Form.Group>
 
                         <Form.Group>
                           <Form.Label>About My Pup!</Form.Label>
-                            <Form.Control rows={2} as="textarea" plaintext readonly defaultValue={pupAboutMe} placeholder={pupAboutMe}/>
+                            <Form.Control rows={2} as="textarea" plaintext disabled="true" defaultValue={pupAboutMe} placeholder={pupAboutMe}/>
                         </Form.Group>
 
                         <Form.Group>
                           <Form.Label>Pup Likes</Form.Label>
-                            <Form.Control rows={1} as="textarea" plaintext readonly defaultValue={pupLikes} placeholder={pupLikes}/>
+                            <Form.Control rows={1} as="textarea" plaintext disabled="true" defaultValue={pupLikes} placeholder={pupLikes}/>
                         </Form.Group>
 
                         <Form.Group>
                           <Form.Label>Pup Dislikes</Form.Label>
-                          <Form.Control rows={1} as="textarea" plaintext readonly defaultValue={pupDislikes} placeholder={pupDislikes}/>
+                          <Form.Control rows={1} as="textarea" plaintext disabled="true" defaultValue={pupDislikes} placeholder={pupDislikes}/>
                         </Form.Group>
                       
                         <Form.Group>
                           <Form.Label>Allergies</Form.Label>
-                            <Form.Control as="textarea" plaintext readonly defaultValue={pupAllergy} placeholder={pupAllergy}/>
+                            <Form.Control as="textarea" plaintext disabled="true" defaultValue={pupAllergy} placeholder={pupAllergy}/>
                         </Form.Group>   
 
                     </Form>
