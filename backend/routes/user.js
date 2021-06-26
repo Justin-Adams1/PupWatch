@@ -46,7 +46,7 @@
 const upload = multer({
     storage: storage,
     limits: {
-        fileSize: 1024 * 1024 * 5
+        fileSize: 2048 * 2048 * 5
     },
     fileFilter: fileFilter
 });
@@ -220,6 +220,42 @@ router.put("/uploadmulter/:id/pup", upload.single("pupImg"), async (req, res) =>
      return res.status(500).send(`Internal Server Error: ${ex}`);
  }
  });
+
+ 
+ // upload a boarding image1
+router.put("/uploadmulter/:id/board1", upload.single("boardingImage1"), async (req, res) => {
+    try{
+     const user = await User.findByIdAndUpdate(req.params.id, {boardingImage1: req.file.path }
+     , { new: true });
+     
+     if (!user)
+     return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);
+ 
+     console.log(user);
+ 
+     await user.save();
+     return res.send(user);
+ } catch (ex) {
+     return res.status(500).send(`Internal Server Error: ${ex}`);
+ }
+ }); 
+ // upload a boarding image2
+ router.put("/uploadmulter/:id/board2", upload.single("boardingImage2"), async (req, res) => {
+     try{
+      const user = await User.findByIdAndUpdate(req.params.id, {boardingImage2: req.file.path }
+      , { new: true });
+      
+      if (!user)
+      return res.status(400).send(`The user with ID: ${req.params.id} does not exist`);
+  
+      console.log(user);
+  
+      await user.save();
+      return res.send(user);
+  } catch (ex) {
+      return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+  });
 
  // update owner profile
  router.put('/:id/updateAccount', auth, async (req, res) => {

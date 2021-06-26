@@ -9,7 +9,7 @@ import config from '../config.json'
 
 const containerStyle = {
   width: 'fit',
-  height: 'auto'
+  height: '1000px'
 };
 
 function MapContainer(props) {

@@ -11,6 +11,7 @@ import jwtDecode from 'jwt-decode';
 import FormData from 'form-data';
 import '../components/css/navigation.css';
 import ProfileImage from './profileImage';
+import PublicBoardImage from './boardImage';
 import PupImage from './pupimg';
 
 
@@ -30,6 +31,8 @@ const Profile = (props)=>{
     const [ boardingAtmosphere, setBoardingAtmosphere] = useState("");
     const [ boardingDescription, setBoardingDescription] = useState("");
     const [ pubUser, setPubUser] = useState('');
+    const [uploadedBoardImage1, setBoardImage1] = useState("");
+    const [uploadedBoardImage2, setBoardImage2] = useState("");
 
     useEffect(() => {
       const pubProfile  = localStorage.getItem('pubProfile');
@@ -38,6 +41,7 @@ const Profile = (props)=>{
       authPub(pubProfile, jwt);
       let userObject = jwtDecode(jwt);
     },[]);    
+    
     const authPub = async (userObject, jwt)=>{
       try{
         const pubUser = await axios.get(`http://localhost:5000/api/user/${userObject}`, {headers: {"x-auth-token": jwt}});
@@ -55,6 +59,8 @@ const Profile = (props)=>{
         setPupAllergy(pubUser.data.pup.allergyInfo);
         setBoardingAtmosphere(pubUser.data.boardingAtmosphere);
         setBoardingDescription(pubUser.data.boardingDescription);
+        setBoardImage1("http://localhost:5000/" + pubUser.data.boardingImage1);
+        setBoardImage2("http://localhost:5000/" + pubUser.data.boardingImage2);
 
         try{
           userObject = jwtDecode(jwt);
@@ -189,7 +195,7 @@ return(
                 </Col>
               </Row>
                 {user.pup.pupImg ?
-                  <Row className="pupProfileStyle">
+                  <Row className="publicpupProfileStyle">
                     <Col>
                     <Row className="popImgCol">
                       <Col className="pupImgCol">
@@ -227,7 +233,15 @@ return(
                         </Form.Group>   
 
                     </Form>
-                  </Col>   
+                  </Col> 
+                    <Row>
+                      <Col>
+                      <PublicBoardImage url={uploadedBoardImage1}/>   
+                      </Col>  
+                      <Col>
+                      <PublicBoardImage url={uploadedBoardImage2}/>
+                      </Col>             
+                    </Row>  
                   </Row>
                 : 
                   <Row className="pupProfileStyle" height="300px">

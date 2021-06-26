@@ -14,8 +14,7 @@ function Main() {
           <Navigation className="navBar"/>
           <img src={Logo} alt="Paw Watch Logo" className="logo"/>       
         </Row>
-        <Row> 
-          <Main />   
+        <Row>   
         </Row> 
       </Container>
       </>

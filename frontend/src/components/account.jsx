@@ -3,7 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import './css/main.css';
 import axios from 'axios';
@@ -11,7 +10,7 @@ import jwtDecode from 'jwt-decode';
 import FormData from 'form-data';
 import '../components/css/navigation.css';
 import ProfileImage from './profileImage';
-import PupImage from './pupimg';
+import BoardImage from './boardImage';
 
 const Profile = (props)=>{
     
@@ -21,8 +20,13 @@ const Profile = (props)=>{
     const [uploadedImage, setUploadedImage] = useState("");
     const [uploadedPupImage, setUploadedPupImage] = useState("");
     const userId = useRef("");
-    const [selectedFile, setSelectedFile] = useState([]);
-	  const [isSelected, setIsSelected] = useState(false);
+    const [selectedFile1, setSelectedFile1] = useState([]);
+    const [selectedFile2, setSelectedFile2] = useState([]);
+	  const [isSelected1, setIsSelected1] = useState(false);
+	  const [isSelected2, setIsSelected2] = useState(false);
+    
+    const [uploadedBoardImage1, setBoardImage1] = useState("");
+    const [uploadedBoardImage2, setBoardImage2] = useState("");
     
     const [name, setName] = useState(""); 
     const [email, setEmail] = useState(""); 
@@ -51,13 +55,9 @@ const Profile = (props)=>{
       console.log("from", from)
 
       setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
-      setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
       console.log("pup", user.data.pup);
-      setPupAboutMe(user.data.pup.aboutMe);
-      setPupName(user.data.pup.name);
-      setPupLikes(user.data.pup.likes);
-      setPupDislikes(user.data.pup.dislikes);
-      setPupAllergy(user.data.pup.allergyInfo);
+      setBoardImage1("http://localhost:5000/" + user.data.boardingImage1);
+      setBoardImage2("http://localhost:5000/" + user.data.boardingImage2);
       setBoardingAtmosphere(user.data.boardingAtmosphere);
       setBoardingDescription(user.data.boardingDescription);
 
@@ -68,10 +68,6 @@ const Profile = (props)=>{
       friendRef.current = user.data.pupList;
 
       setName(user.data.name);
-      setEmail(user.data.email);
-      setPupList(user.data.pupList);
-      setPendingPups(user.data.pendingPups);
-      setAboutMe(user.data.aboutMe)
 
       console.log("received user:", user);
     }catch(error){
@@ -85,7 +81,7 @@ const Profile = (props)=>{
       authUser(userObject, jwt);
       userId.current = userObject;
       console.log("Profile Page Load")
-  },[setIsSelected, setUploadedPupImage, setPendingPups]);
+  },[setIsSelected1,setIsSelected2,setUploadedPupImage, setPendingPups, setBoardImage1, setBoardImage2]);
 
 
 
@@ -137,6 +133,83 @@ const Profile = (props)=>{
     }
 }
 
+const submitBoardImage1 = (event) => {
+  event.preventDefault();
+  
+  console.log('boardImageChange',selectedFile1[0])
+  const formData = new FormData();
+  formData.append("boardingImage1", selectedFile1[0]);
+  
+  var config = {
+      method: 'put',
+      url: `http://localhost:5000/api/user/uploadmulter/${userId.current._id}/board1`, 
+      data : formData,
+      headers: {"Content-Type": "multipart/form-data"},
+  };
+
+  try{
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      window.location = '/account';
+      })
+  .catch(function (error) {
+    console.log(error);
+    });        
+  }catch(error){
+    console.log(error);
+  };
+}
+const submitBoardImage2 = (event) => {
+  event.preventDefault();
+  
+  console.log('boardImageChange',selectedFile2[0])
+  const formData = new FormData();
+  formData.append("boardingImage2", selectedFile2[0]);
+  
+  var config = {
+      method: 'put',
+      url: `http://localhost:5000/api/user/uploadmulter/${userId.current._id}/board2`, 
+      data : formData,
+      headers: {"Content-Type": "multipart/form-data"},
+  };
+
+  try{
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      window.location = '/account';
+      })
+  .catch(function (error) {
+    console.log(error);
+    });        
+  }catch(error){
+    console.log(error);
+  };
+}
+
+const boardImage1Change = (event) => {
+console.log("board 1", uploadedBoardImage1.url);
+
+setSelectedFile1(event.target.files);
+setIsSelected1(true);
+};
+const boardImage2Change = (event) => {
+  console.log("board 2", uploadedBoardImage2.url);
+  
+  setSelectedFile2(event.target.files);
+  setIsSelected2(true);
+  };
+
+// useEffect(() => {
+//     const jwt = localStorage.getItem('token');
+//     const userObject = jwtDecode(jwt);
+//     authUser(userObject, jwt);
+//     userId.current = userObject;
+    
+// },[setIsSelected]);
+
+
 return(
         <>
         {user?
@@ -168,68 +241,28 @@ return(
                         </Form>
                       </Row>
                 </Col>
-                {/* <Col className="profileStyle2">
-                      <Row height="300px">              
-                          <Form onSubmit={(event)=>handleClick(event)}>
+                <Row className="pupProfileStyle">
+                        <h3>Upload an image of your Boarding Location to get started!</h3>
+                      <Col>
+                        <BoardImage url={uploadedBoardImage1}/>
+                        <form onSubmit={submitBoardImage1} encType='multipart/form-data'>
+                        <input type="file" name="ownerImg" onChange={boardImage1Change} />
+                        <div className="loginText">
+                        <Button className="btn btn-success btn-md" type="submit">Submit</Button>
+                        </div>  
+                        </form>
+                      </Col>
+                      <Col>
+                        <BoardImage url={uploadedBoardImage2}/>
+                        <form onSubmit={submitBoardImage2} encType='multipart/form-data'>
+                        <input type="file" name="ownerImg" onChange={boardImage2Change} />
+                        <div className="loginText">
+                        <Button className="btn btn-success btn-md" type="submit">Submit</Button>
+                        </div>  
+                        </form>
+                      </Col>              
+                    </Row>
 
-                          <Form.Group>
-                              <Form.Label>Name</Form.Label>
-                              <Form.Control as="textarea" defaultValue={name} placeholder={name} onChange={nameChange}/>
-                          </Form.Group>
-
-                          <Form.Group>
-                              <Form.Label>Email</Form.Label>
-                              <Form.Control as="textarea" defaultValue={email} placeholder={email} onChange={emailChange}/>
-                          </Form.Group>
-                          <Button className="navItemSmall" type="submit">Update My Info</Button>
-
-                          <Container className="pendingPup">
-                                {pupList.map((pup) => (
-                                              <Row>
-                                                <Row>                                                  
-                                                  <h4>Pup Friends:</h4>
-                                                </Row>
-                                                <Row>
-                                                  <Col>
-                                                    <p>{pup.name}</p>
-                                                  </Col>
-                                                  <Col className="buttonXSGroup">    
-                                                    <ButtonGroup>
-                                                      <Button className="buttonXS" onClick={()=>deleteFriend(pup)}> Delete Friend</Button>
-                                                      </ButtonGroup>
-                                                  </Col>
-                                                </Row>
-                                              </Row>
-                                ))}
-
-                          </Container>
-
-                          <Container className="pendingPup">
-                                {pendingPups.map((pup) => (
-                                              <Row>
-                                                <Row>                                                  
-                                                  <h4>Pending Pup Friends:</h4>
-                                                </Row>
-                                                <Row>
-                                                  <Col>
-                                                    <p>{pup.name}</p>
-                                                  </Col>
-                                                  <Col className="buttonXSGroup">    
-                                                    <ButtonGroup>
-                                                      <Button className="buttonXS" onClick={()=>acceptRequest(pup)}>Accept </Button>
-                                                      <Button className="buttonXS" onClick={()=>deleteRequest(pup)}>Reject</Button>
-                                                      </ButtonGroup>
-                                                  </Col>
-                                                </Row>
-                                              </Row>
-                                ))}
-
-                          </Container>
-
-                                      
-                        </Form>
-                      </Row>
-                </Col> */}
               </Row>
             </Container>
           :

@@ -39,6 +39,8 @@ const Profile = (props)=>{
   
   const [ boardingAtmosphere, setBoardingAtmosphere] = useState("");
   const [ boardingDescription, setBoardingDescription] = useState("");
+  const [uploadedBoardImage1, setBoardImage1] = useState("");
+  const [uploadedBoardImage2, setBoardImage2] = useState("");
 
     const pupNameChange = (event) => {
         setPupName(event.target.value);
@@ -140,6 +142,8 @@ const Profile = (props)=>{
         setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
         console.log("pup", user.data.pup);
         setPupAboutMe(user.data.pup.aboutMe);
+        setBoardImage1("http://localhost:5000/" + user.data.boardImage1);
+        setBoardImage2("http://localhost:5000/" + user.data.boardImage2);
         setPupName(user.data.pup.name);
         setPupLikes(user.data.pup.likes);
         setPupDislikes(user.data.pup.dislikes);
