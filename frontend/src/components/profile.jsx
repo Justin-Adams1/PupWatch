@@ -336,7 +336,7 @@ try{
     .then(response => {
       console.log(response);
       alert("Deleted Friend");
-      window.location = '/account';
+      window.location = '/profile';
     })
     .catch(error => {
         console.log('Error', error);

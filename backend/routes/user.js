@@ -395,7 +395,7 @@ router.patch('/acceptRequest', async (req, res) => {
 router.patch('/deleteFriend', async (req, res) => {
     try{
         const user = await User.findByIdAndUpdate(
-            req.body.pupFriend[0]._id, 
+            req.body.id, 
             {
                 pupList: {name: null, _id: null}
             })
