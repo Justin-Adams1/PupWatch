@@ -12,8 +12,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Navigation from './components/navigation';
-import Logo from './components/css/pawlogo.jpg'
+import Logo from './components/css/logo3.jpg'
+import Logo2 from './components/css/logo2.jpg'
 
 
 import './components/css/main.css';
@@ -26,8 +28,9 @@ function App() {
       <>
       <Container>
         <Row>
-          <Navigation className="navBar"/>
-          <img src={Logo} alt="Paw Watch Logo" className="logo"/>       
+            <img src={Logo} alt="Paw Watch Logo" className="logo"/>   
+            <img src={Logo2} alt="Paw Watch Logo" className="logo2"/>  
+            <Navigation className="navBar"/>  
         </Row>
         <Row className="main"> 
           <Router>

@@ -17,7 +17,13 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 250px;
+    width: 300px;
+}
+.logo2{
+    position: absolute;
+    top: 10px;
+    left: 305px;
+    width: 300px;
 }
 .mainProfilePicture{
     border-style: solid;

@@ -74,6 +74,7 @@ router.post('/', async (req, res) => {
                 pupImg: "",
                 name: "",
                 likes: "",
+                breed: "",
                 dislikes: "",
                 aboutMe: "",
                 allergyInfo: ""
@@ -111,6 +112,7 @@ router.put('/:id/changeall/', auth, async (req, res) => {
                 pup: {  name: req.body.pupname, 
                         aboutMe: req.body.pupaboutMe,
                         likes: req.body.puplikes,
+                        breed: req.body.pupbreed,
                         dislikes: req.body.pupdislikes,
                         allergyInfo: req.body.pupallergyInfo,
                         pupImg: req.body.pupImg 

@@ -39,9 +39,10 @@ const Profile = (props)=>{
   
   const [ boardingAtmosphere, setBoardingAtmosphere] = useState("");
   const [ boardingDescription, setBoardingDescription] = useState("");
-  const [uploadedBoardImage1, setBoardImage1] = useState("");
-  const [uploadedBoardImage2, setBoardImage2] = useState("");
+  const [ uploadedBoardImage1, setBoardImage1] = useState("");
+  const [ pupBreed, setPupBreed] = useState("");
 
+  const [uploadedBoardImage2, setBoardImage2] = useState("");
     const pupNameChange = (event) => {
         setPupName(event.target.value);
     };
@@ -73,6 +74,9 @@ const Profile = (props)=>{
   const aboutMeChange = (event) => {
       setAboutMe(event.target.value);
   }
+  const pupBreedChange = (event) => {
+      setPupBreed(event.target.value);
+  }
 
     const addPup = (event) => {
       event.preventDefault();
@@ -82,6 +86,7 @@ const Profile = (props)=>{
           {
               pupname: pupName, 
               pupaboutMe: pupAboutMe, 
+              pupbreed: pupBreed, 
               puplikes: pupLikes, 
               pupdislikes: pupDislikes, 
               pupallergyInfo: pupAllergy,
@@ -147,6 +152,7 @@ const Profile = (props)=>{
         setPupName(user.data.pup.name);
         setPupLikes(user.data.pup.likes);
         setPupDislikes(user.data.pup.dislikes);
+        setPupBreed(user.data.pup.breed);
         setPupAllergy(user.data.pup.allergyInfo);
         setBoardingAtmosphere(user.data.boardingAtmosphere);
         setBoardingDescription(user.data.boardingDescription);
@@ -259,6 +265,7 @@ const handleClick = (event) => {
           pupaboutMe: user.pup.aboutMe, 
           puplikes: user.pup.likes, 
           pupdislikes: user.pup.dislikes, 
+          pupBreed: user.pup.breed, 
           pupallergyInfo: user.pup.allergyInfo,
           pupImg: user.pup.pupImg,
           name: name,
@@ -452,6 +459,11 @@ return(
                         <Form.Group>
                             <Form.Label>Name</Form.Label>
                             <Form.Control type="text" defaultValue={pupName} placeholder={pupName} onChange={pupNameChange}/>
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Breed</Form.Label>
+                            <Form.Control type="text" defaultValue={pupBreed} placeholder={pupBreed} onChange={pupBreedChange}/>
                         </Form.Group>
 
                         <Form.Group>

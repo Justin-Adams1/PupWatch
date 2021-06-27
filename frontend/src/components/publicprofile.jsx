@@ -32,6 +32,7 @@ const Profile = (props)=>{
     const [ boardingDescription, setBoardingDescription] = useState("");
     const [ pubUser, setPubUser] = useState('');
     const [uploadedBoardImage1, setBoardImage1] = useState("");
+    const [pupBreed, setPupBreed] = useState("");
     const [uploadedBoardImage2, setBoardImage2] = useState("");
 
     useEffect(() => {
@@ -56,6 +57,7 @@ const Profile = (props)=>{
         setPupName(pubUser.data.pup.name);
         setPupLikes(pubUser.data.pup.likes);
         setPupDislikes(pubUser.data.pup.dislikes);
+        setPupBreed(pubUser.data.pup.breed);
         setPupAllergy(pubUser.data.pup.allergyInfo);
         setBoardingAtmosphere(pubUser.data.boardingAtmosphere);
         setBoardingDescription(pubUser.data.boardingDescription);
@@ -105,6 +107,9 @@ const Profile = (props)=>{
         }catch(error){
           console.log(error);
         }
+    }
+    const pupBreedChange = (event) => {
+        setPupBreed(event.target.value);
     }
 
     const addFriend = async () => {
@@ -210,6 +215,11 @@ return(
                         <Form.Group>
                             <Form.Label>Name</Form.Label>
                             <Form.Control rows={1}  type="text"  plaintext disabled="true" defaultValue={pupName} placeholder={pupName}/>
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Breed</Form.Label>
+                            <Form.Control type="text" plaintext disabled="true" defaultValue={pupBreed} placeholder={pupBreed}/>
                         </Form.Group>
 
                         <Form.Group>

@@ -36,11 +36,8 @@ const upload = multer({
   // upload image to playpen
   router.post("/uploadmulter/playpen", upload.single("pup"), async (req, res) => {
     let path = req.file.path;
-          const newPup = {
-            pup: path
-          };
     try{
-          let pup = new PupImage({ strict: false });
+          let pup = new PupImage({pup: path}, { strict: false });
           await pup.save();
           console.log("final pup", pup)
           

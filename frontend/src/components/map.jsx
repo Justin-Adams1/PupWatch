@@ -6,11 +6,15 @@ import ProfileImage from './infoWindowPic';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import config from '../config.json'
+import mapStyle from './css/mapstyle.json';
+import markerStyle from '../components/css/pawMarker2.jpg';
 
 const containerStyle = {
   width: 'fit',
   height: '1000px'
 };
+
+
 
 function MapContainer(props) {
   const { isLoaded } = useJsApiLoader({
@@ -19,7 +23,7 @@ function MapContainer(props) {
   })
 
   const [map, setMap] = useState({})
-  const [setZoom, useSetZoom] = useState(17);
+  const [setZoom, useSetZoom] = useState(16);
 
   const onLoad = useCallback(function callback(map) {
     // const bounds = new window.google.maps.LatLngBounds();
@@ -65,12 +69,16 @@ const onMapClick = () => {
         onUnmount={onUnmount}
         onClick={onMapClick}
         key={props.id}
+        options={{
+          styles: mapStyle
+        }}
       >
         {props.markerPack.map(marker => {
             return(
               <div ref={ref} id="marker" key={marker._id}>
                 <Marker                  
                   name={marker.name}
+                  icon={markerStyle}
                   clickable={true}
                   position={ {lat: marker.geoAddress[0], lng: marker.geoAddress[1]} }
                   boardingAtmosphere={marker.boardingAtmosphere}
