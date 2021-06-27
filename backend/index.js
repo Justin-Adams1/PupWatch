@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const user = require('./routes/user');
 const auth = require('./routes/auth');
+const playpen = require('./routes/playpen')
 const message = require('./routes/message');
 const config = require(('./../frontend/src/config.json'))
 const bodyParser = require('body-parser');
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/user/', user);
 app.use('/api/auth/', auth);
+app.use('/api/playpen/', playpen);
 app.use('/api/message/', message);
 app.use('/uploads/', express.static('uploads'))
 app.use(bodyParser.urlencoded({ extended: false }));

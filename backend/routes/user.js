@@ -1,5 +1,6 @@
  const { User } = require('../models/user');
  const { Image } = require('../models/image');
+ const { PupImage } = require('../models/pupImage');
  const { validate } = require('../models/user')
  const bcrypt = require('bcrypt');
  const express = require('express');
@@ -353,6 +354,18 @@ router.get('/populateAddress', auth, async (req, res) => {
                 pup: 1,
                 number: 1,
             })
+            console.log(user);
+            return res.send(user);
+        
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+}); 
+
+//get play place
+router.get('/getPlayPen', async (req, res) => {
+    try {
+        const user = await PlaypenImage.find()
             console.log(user);
             return res.send(user);
         

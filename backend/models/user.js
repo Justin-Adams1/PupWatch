@@ -26,7 +26,7 @@ userSchema.methods.generateAuthToken = function (){
     return jwt.sign({ _id: this._id, name: this.name } , config.get('jwtSecret'));
 };
 
-const User = mongoose.model('User', userSchema);;
+const User = mongoose.model('User', userSchema);
 
 
 function validateUser(user) {

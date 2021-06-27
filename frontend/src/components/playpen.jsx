@@ -6,12 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './css/main.css';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import FormData from 'form-data';
-import { publicDecrypt } from 'crypto';
-import Navigation from './navigation';
 import Logo from './css/pawlogo.jpg'
-import { copyFileSync } from 'fs';
+import PlaypenImage from './plapenImage';
 
 const Profile = (props)=>{
     
@@ -19,33 +16,79 @@ const Profile = (props)=>{
     // const userObject = jwtDecode(jwt);
     const [user, setUser] = useState();
     const [uploadedImage, setUploadedImage] = useState("");
+    const [upload, setUpload] = useState("");
     const userId = useRef("");
+    const [uploadedPups, setUploadedPups] = useState([]);
+    const [isSelected, setIsSelected] = useState(false);
 
-    // const authUser = async (userObject, jwt)=>{
-    //   try{
-    //     const user = await axios.get(`http://localhost:5000/api/user/${userObject._id}`, {headers: {"x-auth-token": jwt}});
-    //     setUser(user.data);  
-    //     setUploadedImage("http://localhost:5000/" + user.data.ownerImg);
-    //     console.log(user);
-    //   }catch(error){
-    //     console.log(error);
-    //   }
-    // }
+    const getPups = async ()=>{
+      try{
+        const pups = await axios.get(`http://localhost:5000/api/user/getPlayPen`);
+        setUploadedPups(pups.data);  
+        console.log(pups);
+      }catch(error){
+        console.log(error);
+      }
+    }
+    const imgSubmit = (event) => {
+        event.preventDefault();
+        let name = "pup"
+        
+        console.log('ImgChange',upload[0])
+        const formData = new FormData();
+        formData.append("pup", upload[0]);
+        
+        var config = {
+            method: 'post',
+            url: "http://localhost:5000/api/playpen/uploadmulter/playpen", 
+            data : formData,
+            headers: {"Content-Type": "multipart/form-data"},
+        };
+  
+        try{
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            window.location = '/playpen';
+            })
+        .catch(function (error) {
+          console.log(error);
+          });        
+        }catch(error){
+          console.log(error);
+        };
+      }
 
-    // useEffect(() => {
-    //     const jwt = localStorage.getItem('token');
-    //     const userObject = jwtDecode(jwt);
-    //     authUser(userObject, jwt);
-    //     userId.current = userObject;
-    //     console.log("Profile Page Load")
-    // },[]);
+    useEffect(() => {
+        getPups();
+    },[]);
+    
+    const imgChange = (event) => {    
+    setUpload(event.target.files);
+    setIsSelected(true);
+    };
     
     // console.log("GotUserObject?", userObject)
 
     return(
-        <>
-        <h1>Play Pen</h1>
-        </>
+        <div>
+              <Row>                                                  
+                <h4>Upload an image to share with the others in the Play Pen!</h4>                
+                <form onSubmit={imgSubmit} encType='multipart/form-data'>
+                      <input className="navItemSmall2" type="file" name="ownerImg" onChange={imgChange} />
+                      <Button className="navItemSmall2" type="submit">Submit</Button>
+                      </form>
+              </Row>
+            {uploadedPups.map((pup) => (
+            <Row>
+              <Row>
+                <Col>                
+                    <PlaypenImage props={pup}/>
+                </Col>
+              </Row>
+            </Row>
+))}
+        </div>
     )
 }
 
