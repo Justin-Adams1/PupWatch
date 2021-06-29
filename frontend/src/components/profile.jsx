@@ -25,6 +25,7 @@ const Profile = (props)=>{
   const [isSelected, setIsSelected] = useState(false);
   
   const [name, setName] = useState(""); 
+  const [ number, setNumber] = useState("");
   const [email, setEmail] = useState(""); 
   const [pupList, setPupList] = useState([]);
   const [pendingPups, setPendingPups] = useState([]);
@@ -57,6 +58,9 @@ const Profile = (props)=>{
     }
     const pupAllergyChange = (event) => {
         setPupAllergy(event.target.value);
+    }
+    const numberChange = (event) => {
+        setNumber(event.target.value);
     }
         
     const nameChange = (event) => {
@@ -92,6 +96,7 @@ const Profile = (props)=>{
               pupallergyInfo: pupAllergy,
               pupImg: user.pup.pupImg,
               name: user.name,
+              number: user.number,
               email: user.email,
               aboutMe: user.aboutMe,
               ownerImg: user.ownerImg,
@@ -147,6 +152,7 @@ const Profile = (props)=>{
         setUploadedPupImage("http://localhost:5000/" + user.data.pup.pupImg);
         console.log("pup", user.data.pup);
         setPupAboutMe(user.data.pup.aboutMe);
+        setNumber(user.data.number);
         setBoardImage1("http://localhost:5000/" + user.data.boardImage1);
         setBoardImage2("http://localhost:5000/" + user.data.boardImage2);
         setPupName(user.data.pup.name);
@@ -382,6 +388,12 @@ return(
                               <Form.Label>Name</Form.Label>
                               <Form.Control as="textarea" defaultValue={name} placeholder={name} onChange={nameChange}/>
                           </Form.Group>
+
+                          <Form.Group>
+                              <Form.Label>Phone Number</Form.Label>
+                              <Form.Control type="text" defaultValue={number} placeholder={number} onChange={numberChange}/>
+                          </Form.Group>
+
 
                           <Form.Group>
                               <Form.Label>Email</Form.Label>

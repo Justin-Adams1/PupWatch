@@ -88,7 +88,7 @@ const Profile = (props)=>{
     const logOut = () => {
         localStorage.removeItem('token');
         window.location = '/login';
-    }  
+    } 
 
     const boardingAtmosphereChange = (event) => {
       setBoardingAtmosphere(event.target.value);

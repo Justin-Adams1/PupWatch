@@ -92,7 +92,7 @@ const Profile = (props)=>{
     const handleClick = async (event) => {
         console.log("message", message)
         console.log("number", number)
-        console.log("user", from)
+        console.log("from", from)
 
         try{
           await axios

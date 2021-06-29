@@ -17,6 +17,9 @@ const MESSAGING_SERVICE_SID = process.env.MESSAGING_SERVICE_SID;
   router.post('/', (req, res) => {
     console.log("twilio",req.body);
 
+    console.log("to", req.body.to);
+    console.log("from", req.body.from);
+
     const client = require('twilio')(accountSid, authToken); 
      
     client.messages 
