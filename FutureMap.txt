@@ -1,0 +1,3 @@
+Hello!
+
+For the future, I would like to really dive into implementing Twilio into handling a true message system entirely in app. I would like to really dive into customizing Google Maps into something a little more useful. This has so many options that the 3 week scope of this project didn't really allow me to get super familiar with.
