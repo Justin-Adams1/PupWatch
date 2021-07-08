@@ -1,3 +1,5 @@
 Hello!
 
 For the future, I would like to really dive into implementing Twilio into handling a true message system entirely in app. I would like to really dive into customizing Google Maps into something a little more useful. This has so many options that the 3 week scope of this project didn't really allow me to get super familiar with.
+
+Twilio really has a lot of functions that I didn't really have the time to develop. It has the capacity to handle all image archiving, true chat  bot experiences, and customer support. Implementing this fully will save time and lower manpower cost to maintain PupWatch. This will also deliver a more seamless user experience. 
